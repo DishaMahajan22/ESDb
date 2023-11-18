@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Routes, Route, HashRouter as Router } from 'react-router-dom';
 import Search from './pages/Search';
 import Insert from './pages/Insert';
 import Update from './pages/Update';

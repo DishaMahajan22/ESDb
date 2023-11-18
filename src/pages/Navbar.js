@@ -17,10 +17,10 @@ const CustomNavbar = () => {
             />
           </Navbar.Brand>
           <Nav className="ml-auto">
-            <Nav.Link href="/">Search</Nav.Link>
-            <Nav.Link href="/insert">Insert</Nav.Link>
-            <Nav.Link href="/delete">Delete</Nav.Link>
-            <Nav.Link href="/update">Update</Nav.Link>
+            <Nav.Link href="#/">Search</Nav.Link>
+            <Nav.Link href="#/insert">Insert</Nav.Link>
+            <Nav.Link href="#/delete">Delete</Nav.Link>
+            <Nav.Link href="#/update">Update</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
