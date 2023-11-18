@@ -1,15 +1,21 @@
-import './App.css';
-
-function App() {
+import React from 'react';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import Search from './pages/Search';
+import Insert from './pages/Insert';
+import Update from './pages/Update';
+import Delete from './pages/Delete';
+import CustomNavbar from './pages/Navbar';
+const App = () =>{
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          Welcome to ESDB!
-        </h1>
-        <p>Your database for everything E-Sports!</p>
-      </header>
-    </div>
+    <Router>
+      <CustomNavbar />
+      <Routes>
+        <Route path="/" element={<Search />} />
+        <Route path="/insert" element={<Insert />} />
+        <Route path="/update" element={<Update />} />
+        <Route path="/delete" element={<Delete />} />
+      </Routes>
+    </Router>
   );
 }
 
