@@ -5,7 +5,7 @@ const Search = () => {
 
   return (
     <>
-      <div class="input-group w-50 mx-auto text-center p-5">
+      <div class="input-group w-full mx-auto text-center p-5">
         <input
           type="text"
           class="form-control"
