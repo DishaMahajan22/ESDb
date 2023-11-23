@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route, HashRouter as Router } from 'react-router-dom';
-import Search from './pages/Search';
-import Insert from './pages/Insert';
-import Update from './pages/Update';
-import Delete from './pages/Delete';
-import CustomNavbar from './pages/Navbar';
+import Search from './components/Search';
+import Insert from './components/Insert';
+import Update from './components/Update';
+import Delete from './components/Delete';
+import CustomNavbar from './components/Navbar';
 const App = () =>{
   return (
     <Router>
