@@ -1,19 +1,37 @@
 import React from "react";
 import { useState } from "react";
+
 const Search = () => {
   const [selectedItem, setSelectedItem] = useState("Tournament"); // Default value
+  const [searchItem, setSearchItem] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
+
+  const handleSearch = async() => {
+    console.log("Searching...");
+    try {
+      // Send a request to the server with query
+      const response = await fetch(`/search?query=${searchItem}`);
+      const data = await response.json();
+      setSearchResults(data);
+      console.log(`Searching for ${searchItem}`);
+      console.log("Search Results:", searchResults);
+    } catch (error) {
+      console.error("Error searching:", error);
+    }
+  };
 
   return (
     <>
-      <div class="input-group w-full mx-auto text-center p-5">
+      <div className="input-group w-full mx-auto text-center p-5">
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           aria-label="Text input with dropdown button"
+          onChange={(e)=>setSearchItem(e.target.value)}
         />
-        <div class="input-group-append">
+        <div className="input-group-append">
           <button
-            class="btn btn-outline-secondary dropdown-toggle"
+            className="btn btn-outline-secondary dropdown-toggle rounded-0"
             type="button"
             data-bs-toggle="dropdown"
             aria-haspopup="true"
@@ -21,21 +39,28 @@ const Search = () => {
           >
             {selectedItem}
           </button>
-          <div class="dropdown-menu">
-            <div class="dropdown-item" onClick={()=>setSelectedItem('Tournament')}>
+          <div className="dropdown-menu">
+            <div className="dropdown-item" onClick={() => setSelectedItem('Tournament')}>
               Tournament
             </div>
-            <div class="dropdown-item" onClick={()=>setSelectedItem('Player')}>
+            <div className="dropdown-item" onClick={() => setSelectedItem('Player')}>
               Player
             </div>
-            <div class="dropdown-item" onClick={()=>setSelectedItem('Team')}>
+            <div className="dropdown-item" onClick={() => setSelectedItem('Team')}>
               Team
             </div>
-            <div class="dropdown-item" onClick={()=>setSelectedItem('Game')}>
-            Game
+            <div className="dropdown-item" onClick={() => setSelectedItem('Game')}>
+              Game
             </div>
           </div>
         </div>
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
       </div>
 
       <h2>Top Games</h2>

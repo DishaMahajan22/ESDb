@@ -2,7 +2,6 @@ const express = require('express');
 const mssql = require('mssql');
 require('dotenv').config({ path: '../.env' });
 const app = express();
-
 // Middleware to parse JSON requests
 app.use(express.json());
 
@@ -23,7 +22,7 @@ app.get('/test-database-connection', async (req, res) => {
     // Connect to the database using dbConfig
     const pool = await mssql.connect(dbConfig);
 
-    // Query the database as an example
+    // Query the database example to test
     const result = await pool.request().query('SELECT top 10 * FROM dbo.Player');
 
     // Log the result to the console
@@ -39,7 +38,27 @@ app.get('/test-database-connection', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+// Endpoint for handling search requests
+app.get('/search', async (req, res) => {
+  const searchQuery = req.query.query;
 
+  try {
+    // Connect to the database 
+    const pool = await mssql.connect(dbConfig);
+
+    // Execute a query
+    const result = await pool
+      .request()
+      .query(`SELECT top 10 * FROM dbo.Player`);
+
+    // Send the search results as JSON
+    res.json(result.recordset);
+  } catch (error) {
+    // Log any errors
+    console.error('Error searching in the database:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
