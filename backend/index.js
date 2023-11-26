@@ -8,7 +8,12 @@ const path = require('path');
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(cors())
-app.use('/',express.static(path.join(__dirname, '../build')));
+
+//app.use('/',express.static(path.join(__dirname, '../build')));
+const corsOptions = {
+  origin: 'https://esdb.onrender.com',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 const connection = mysql.createConnection(process.env.DATABASE_URL)
 
 // Database configuration

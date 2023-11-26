@@ -10,7 +10,7 @@ const Search = () => {
     console.log("Searching...");
     try {
       // Send a request to the server with query
-      const response = await fetch(`https://esdb.azurewebsites.net/search?query=${searchItem}`);
+      const response = await fetch(`https://esdb.onrender.com/search?query=${searchItem}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
