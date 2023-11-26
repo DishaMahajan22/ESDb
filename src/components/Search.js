@@ -10,7 +10,10 @@ const Search = () => {
     console.log("Searching...");
     try {
       // Send a request to the server with query
-      const response = await fetch(`/search?query=${searchItem}`);
+      const response = await fetch(`https://esdb.azurewebsites.net:443/search?query=${searchItem}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
       setSearchResults(data);
       console.log(`Searching for ${searchItem}`);
