@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Search = () => {
   const [selectedItem, setSelectedItem] = useState("Tournament"); // Default value
@@ -23,9 +23,11 @@ const Search = () => {
   };
 
   useEffect(() => {
-    console.log("Search Results:", searchResults);
+    if (searchResults !== null) {
+      console.log("Search Results:", searchResults);
+    }
   }, [searchResults]);
-  
+
   return (
     <>
       <div className="input-group w-full mx-auto text-center p-5">
