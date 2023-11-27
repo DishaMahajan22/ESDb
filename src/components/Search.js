@@ -17,12 +17,15 @@ const Search = () => {
       const data = await response.json();
       setSearchResults(data);
       console.log(`Searching for ${searchItem}`);
-      console.log("Search Results:", searchResults);
     } catch (error) {
       console.error("Error searching:", error);
     }
   };
 
+  useEffect(() => {
+    console.log("Search Results:", searchResults);
+  }, [searchResults]);
+  
   return (
     <>
       <div className="input-group w-full mx-auto text-center p-5">
