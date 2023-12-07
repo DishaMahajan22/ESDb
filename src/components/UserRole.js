@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [userRole, setUserRole] = useState('GeneralFan'); // default role
+  const [userRole, setUserRole] = useState('General Fan'); // default role
 
   const updateUserRole = (newRole) => {
     setUserRole(newRole);

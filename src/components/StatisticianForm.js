@@ -8,7 +8,7 @@ const StatisticianForm = () => {
 
   // Tab 1 - Outcome
   const [outcomeID, setOutcomeID] = useState("");
-  const [sponsorID, setSponsorID] = useState("");
+    //get sponsor id from other state
   const [eventName, setEventName] = useState("");
   const [winningTeamName, setWinningTeamName] = useState("");
   const [losingTeamName, setLosingTeamName] = useState("");
@@ -29,6 +29,17 @@ const StatisticianForm = () => {
   const [accuracy, setAccuracy] = useState("");
   const [kdRatio, setKDRatio] = useState("");
   const [winRate, setWinRate] = useState("");
+  
+  // Tab 4 - Sponsor
+  const [sponsorID, setSponsorID] = useState("");
+  const [sponsorName, setSponsorName] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [address, setAddress] = useState("");
+
+  // Tab 5 - Sponsors Relationship
+  const [contractStartDate, setContractStartDate] = useState(null);
+  const [contractEndDate, setContractEndDate] = useState(null);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -92,6 +103,22 @@ const StatisticianForm = () => {
             onClick={() => handleTabChange("tab3")}
           >
             Statistic
+          </div>
+        </li>
+        <li className="nav-item">
+          <div
+            className={`nav-link ${activeTab === "tab4" ? "active" : ""}`}
+            onClick={() => handleTabChange("tab4")}
+          >
+            Sponsor
+          </div>
+        </li>
+        <li className="nav-item">
+          <div
+            className={`nav-link ${activeTab === "tab5" ? "active" : ""}`}
+            onClick={() => handleTabChange("tab5")}
+          >
+            Add Sponsor To Event
           </div>
         </li>
       </ul>
@@ -268,6 +295,93 @@ const StatisticianForm = () => {
               className="btn btn-outline-dark btn-sm mt-3"
               onClick={handleStatisticSubmit}
             >
+              Submit
+            </button>
+          </div>
+        </div>
+        <div
+          className={`tab-pane fade ${
+            activeTab === "tab4" ? "show active" : ""
+          }`}
+        >
+          <div className="d-flex flex-column mx-5 my-5">
+            <label className="col-form-label">Sponsor ID:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={sponsorID}
+              onChange={(e) => setSponsorID(e.target.value)}
+            />
+            <label className="col-form-label">Name:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={sponsorName}
+              onChange={(e) => setSponsorName(e.target.value)}
+            />
+            <label className="col-form-label">State:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            />
+            <label className="col-form-label">Zip Code:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+            />
+            <label className="col-form-label">Address:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+              Submit
+            </button>
+          </div>
+        </div>
+        <div
+          className={`tab-pane fade ${
+            activeTab === "tab5" ? "show active" : ""
+          }`}
+        >
+          <div className="d-flex flex-column mx-5 my-5">
+            <label className="col-form-label">Event Name:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+            <label className="col-form-label">Sponsor ID:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={sponsorID}
+              onChange={(e) => setSponsorID(e.target.value)}
+            />
+            <label className="col-form-label">Contract Start Date:</label>
+            <DatePicker
+              selected={contractStartDate}
+              onChange={(date) => setContractStartDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
+            />
+            <label className="col-form-label">Contract End Date:</label>
+            <DatePicker
+              selected={contractEndDate}
+              onChange={(date) => setContractEndDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
+            />
+            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
               Submit
             </button>
           </div>

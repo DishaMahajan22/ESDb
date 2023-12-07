@@ -20,12 +20,20 @@ const GeneralFanForm = () => {
   const [creator, setCreator] = useState("");
   const [teamSize, setTeamSize] = useState("");
 
-  // Tab 3 - Sponsor
-  const [sponsorID, setSponsorID] = useState("");
-  const [sponsorName, setSponsorName] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [address, setAddress] = useState("");
+  // Tab 3 - Event
+  const [eventName, setEventName] = useState("");
+  const [sponsorId, setSponsorId] = useState("");
+  const [tournamentId, setTournamentId] = useState("");
+  const [location, setLocation] = useState("");
+  const [seats, setSeats] = useState(0);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState(0);
+
+  // Tab 4 - Tournament
+  const [tournamentID, setTournamentID] = useState("");
+  const [tournamentName, setTournamentName] = useState("");
+  const [tournamentStartDate, setTournamentStartDate] = useState(null);
+  const [tournamentEndDate, setTournamentEndDate] = useState(null);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -55,7 +63,15 @@ const GeneralFanForm = () => {
             className={`nav-link ${activeTab === "tab3" ? "active" : ""}`}
             onClick={() => handleTabChange("tab3")}
           >
-            Sponsor
+            Event
+          </div>
+        </li>
+        <li className="nav-item">
+          <div
+            className={`nav-link ${activeTab === "tab4" ? "active" : ""}`}
+            onClick={() => handleTabChange("tab4")}
+          >
+            Tournament
           </div>
         </li>
       </ul>
@@ -169,40 +185,97 @@ const GeneralFanForm = () => {
           }`}
         >
           <div className="d-flex flex-column mx-5 my-5">
+            <label className="col-form-label">Event Name:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
             <label className="col-form-label">Sponsor ID:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={sponsorID}
-              onChange={(e) => setSponsorID(e.target.value)}
+              value={sponsorId}
+              onChange={(e) => setSponsorId(e.target.value)}
             />
-            <label className="col-form-label">Name:</label>
+            <label className="col-form-label">Tournament ID:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={sponsorName}
-              onChange={(e) => setSponsorName(e.target.value)}
+              value={tournamentId}
+              onChange={(e) => setTournamentId(e.target.value)}
             />
-            <label className="col-form-label">State:</label>
+            <label className="col-form-label">Location:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
-            <label className="col-form-label">Zip Code:</label>
+            <label className="col-form-label">Seats:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
+              value={seats}
+              onChange={(e) => setSeats(e.target.value)}
             />
-            <label className="col-form-label">Address:</label>
+            <label className="col-form-label">Start Date:</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
+            />
+            <label className="col-form-label">End Date:</label>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
+            />
+            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+              Submit
+            </button>
+          </div>
+        </div>
+        <div
+          className={`tab-pane fade ${
+            activeTab === "tab4" ? "show active" : ""
+          }`}
+        >
+          <div className="d-flex flex-column mx-5 my-5">
+            <label className="col-form-label">Tournament ID:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              value={tournamentID}
+              onChange={(e) => setTournamentID(e.target.value)}
+            />
+            <label className="col-form-label">Tournament Name:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={tournamentName}
+              onChange={(e) => setTournamentName(e.target.value)}
+            />
+            <label className="col-form-label">Start Date:</label>
+            <DatePicker
+              selected={tournamentStartDate}
+              onChange={(date) => setTournamentStartDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
+            />
+            <label className="col-form-label">End Date:</label>
+            <DatePicker
+              selected={tournamentEndDate}
+              onChange={(date) => setTournamentEndDate(date)}
+              className="form-control mb-3"
+              dateFormat="MM/dd/yyyy"
+              placeholderText="MM/DD/YYYY"
             />
             <button type="button" className="btn btn-outline-dark btn-sm mt-3">
               Submit
