@@ -10,6 +10,7 @@ const ManagerExpertForm = () => {
   };
   // Tab 0 - Player
   const [playerID, setPlayerID] = useState("");
+  const [playerStatisticID, setPlayerStatisticID] = useState("");
   const [name, setName] = useState("");
   const [gamerTag, setGamerTag] = useState("");
   const [dob, setDob] = useState(null);
@@ -398,7 +399,7 @@ const handleInsertPlayerToTeam = async () => {
               type="text"
               className="form-control mb-3"
               value={statisticID}
-              onChange={(e) => setStatisticID(e.target.value)}
+              onChange={(e) => setPlayerStatisticID(e.target.value)}
             />
             <label className="col-form-label">Name:</label>
             <input

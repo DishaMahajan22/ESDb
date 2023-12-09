@@ -12,6 +12,35 @@ const GeneralFanForm = () => {
   const [gamerTag, setGamerTag] = useState("");
   const [dob, setDob] = useState(null);
   const [birthplace, setBirthplace] = useState("");
+  const handleInsertPlayer = async () => {
+    console.log("Inserting Player");
+    console.log('Data to be sent:', {Player_ID: playerID, Name: name, Gamer_tag: gamerTag, DOB: dob, Birthplace: birthplace});
+    try {
+      const response = await fetch("http://localhost:5000/insertPlayer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Player_ID: playerID, //assuming this is a variable
+          Name: name,
+          Gamer_tag: gamerTag,
+          DOB: dob,
+          Birthplace: birthplace,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Player:", data);
+    } catch (error) {
+      console.error("Error inserting player:", error);
+    }
+  }
+
 
   // Tab 2 - Game
   const [gameName, setGameName] = useState("");
@@ -19,6 +48,34 @@ const GeneralFanForm = () => {
   const [genre, setGenre] = useState("");
   const [creator, setCreator] = useState("");
   const [teamSize, setTeamSize] = useState("");
+  const handleInsertGame = async () => {
+    console.log("Inserting Game");
+    console.log('Data to be sent:', {Game_name: gameName, Sequel_number: sequelNumber, Genre: genre, Creator: creator, Team_size: teamSize});
+    try {
+      const response = await fetch("http://localhost:5000/insertGame", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Game_name: gameName, //assuming this is a variable
+          Sequel_number: sequelNumber,
+          Genre: genre,
+          Creator: creator,
+          Team_size: teamSize,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Game:", data);
+    } catch (error) {
+      console.error("Error inserting game:", error);
+    }
+  }
 
   // Tab 3 - Event
   const [eventName, setEventName] = useState("");
@@ -26,14 +83,71 @@ const GeneralFanForm = () => {
   const [tournamentId, setTournamentId] = useState("");
   const [location, setLocation] = useState("");
   const [seats, setSeats] = useState(0);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState(0);
+  const [eventStartDate, setEventStartDate] = useState(null);
+  const [eventEndDate, setEventEndDate] = useState(null);
+  const handleInsertEvent = async () => {
+    console.log("Inserting Event");
+    console.log('Data to be sent:', {Event_name: eventName, Sponsor_ID: sponsorId, Tournament_ID: tournamentId, Location: location, Seats: seats, Start_date: eventStartDate, End_date: eventEndDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertEvent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Event_name: eventName, //assuming this is a variable
+          Sponsor_ID: sponsorId,
+          Tournament_ID: tournamentId,
+          Location: location,
+          Seats: seats,
+          Start_date: eventStartDate,
+          End_date: eventEndDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Event:", data);
+    } catch (error) {
+      console.error("Error inserting event:", error);
+    }
+  }
 
   // Tab 4 - Tournament
   const [tournamentID, setTournamentID] = useState("");
   const [tournamentName, setTournamentName] = useState("");
-  const [tournamentStartDate, setTournamentStartDate] = useState(null);
-  const [tournamentEndDate, setTournamentEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const handleInsertTournament = async () => {
+    console.log("Inserting Tournament");
+    console.log('Data to be sent:', {Tournament_ID: tournamentID,Name: tournamentName, Start_date: startDate, End_date: endDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertTournament", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Tournament_ID: tournamentID, //assuming this is a variable
+          Name: tournamentName,
+          Start_date: startDate,
+          End_date: endDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Tournament:", data);
+    } catch (error) {
+      console.error("Error inserting tournament:", error);
+    }
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -126,7 +240,11 @@ const GeneralFanForm = () => {
               value={birthplace}
               onChange={(e) => setBirthplace(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertPlayer}
+            >
               Submit
             </button>
           </div>
@@ -173,7 +291,11 @@ const GeneralFanForm = () => {
               value={teamSize}
               onChange={(e) => setTeamSize(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertGame}
+            >
               Submit
             </button>
           </div>
@@ -236,7 +358,11 @@ const GeneralFanForm = () => {
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertEvent}
+            >
               Submit
             </button>
           </div>
@@ -263,21 +389,25 @@ const GeneralFanForm = () => {
             />
             <label className="col-form-label">Start Date:</label>
             <DatePicker
-              selected={tournamentStartDate}
-              onChange={(date) => setTournamentStartDate(date)}
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
             <label className="col-form-label">End Date:</label>
             <DatePicker
-              selected={tournamentEndDate}
-              onChange={(date) => setTournamentEndDate(date)}
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertTournament}
+            >
               Submit
             </button>
           </div>
