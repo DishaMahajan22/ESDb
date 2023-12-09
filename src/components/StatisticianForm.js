@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const StatisticianForm = () => {
   const [activeTab, setActiveTab] = useState("tab1");
-
+  const [insertedData, setInsertedData] = useState(false);
   // Tab 1 - Outcome
   const [outcomeID, setOutcomeID] = useState("");
     //get sponsor id from other state
@@ -40,6 +40,10 @@ const StatisticianForm = () => {
 
       const data = await response.json();
       console.log("Inserted Outcome:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting outcome:", error);
     }
@@ -74,6 +78,10 @@ const StatisticianForm = () => {
 
       const data = await response.json();
       console.log("Inserted Tournament:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting tournament:", error);
     }
@@ -113,6 +121,10 @@ const StatisticianForm = () => {
 
       const data = await response.json();
       console.log("Inserted Statistic:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting statistic:", error);
     }
@@ -148,6 +160,10 @@ const StatisticianForm = () => {
 
       const data = await response.json();
       console.log("Inserted Sponsor:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting sponsor:", error);
     }
@@ -156,8 +172,8 @@ const StatisticianForm = () => {
   // Tab 5 - Sponsors Relationship
   const [contractStartDate, setContractStartDate] = useState(null);
   const [contractEndDate, setContractEndDate] = useState(null);
-  const handleInsertSponsorRelationship = async () => {
-    console.log("Inserting Sponsor Relationship");
+  const handleInsertSponsorsRelationship = async () => {
+    console.log("Inserting Sponsors Relationship");
     console.log('Data to be sent:', {Event_Name: eventName, Sponsor_ID: sponsorID, Contract_Start_Date: contractStartDate, Contract_End_Date: contractEndDate});
     try {
       const response = await fetch("http://localhost:5000/insertSponsorRelationship", {
@@ -179,6 +195,10 @@ const StatisticianForm = () => {
 
       const data = await response.json();
       console.log("Inserted Sponsor Relationship:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting sponsor relationship:", error);
     }
@@ -188,7 +208,7 @@ const StatisticianForm = () => {
     setActiveTab(tab);
   };
 
-  const handleOutcomeSubmit = (e) => {
+  /*const handleOutcomeSubmit = (e) => {
     e.preventDefault(); 
     // Handle form submission for Outcome tab
     console.log("Outcome ID:", outcomeID);
@@ -219,7 +239,7 @@ const StatisticianForm = () => {
     console.log("Accuracy:", accuracy);
     console.log("K/D Ratio:", kdRatio);
     console.log("Win Rate:", winRate);
-  };
+  };*/
 
   return (
     <div>
@@ -264,6 +284,11 @@ const StatisticianForm = () => {
             Add Sponsor To Event
           </div>
         </li>
+        {insertedData && (
+            <div class="alert alert-success" role="alert">
+              Successfully Inserted!
+            </div>
+          )}
       </ul>
 
       <div className="tab-content">
@@ -355,7 +380,7 @@ const StatisticianForm = () => {
             <label className="col-form-label">Start Date:</label>
             <DatePicker
               selected={startDate}
-              onChange={(date) => startDate(date)}
+              onChange={(date) => setStartDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
@@ -528,7 +553,11 @@ const StatisticianForm = () => {
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertSponsorsRelationship}
+            >
               Submit
             </button>
           </div>

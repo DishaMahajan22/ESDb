@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const GeneralFanForm = () => {
   const [activeTab, setActiveTab] = useState("tab1");
+  const [insertedData, setInsertedData] = useState(false);
   // Tab 1 - Player
   const [playerID, setPlayerID] = useState("");
   const [statisticID, setStatisticID] = useState("");
@@ -36,6 +37,10 @@ const GeneralFanForm = () => {
 
       const data = await response.json();
       console.log("Inserted Player:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting player:", error);
     }
@@ -72,6 +77,10 @@ const GeneralFanForm = () => {
 
       const data = await response.json();
       console.log("Inserted Game:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting game:", error);
     }
@@ -111,6 +120,10 @@ const GeneralFanForm = () => {
 
       const data = await response.json();
       console.log("Inserted Event:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting event:", error);
     }
@@ -144,6 +157,10 @@ const GeneralFanForm = () => {
 
       const data = await response.json();
       console.log("Inserted Tournament:", data);
+      setInsertedData(true);
+      setTimeout(() => {
+        setInsertedData(false);
+      }, 3000);
     } catch (error) {
       console.error("Error inserting tournament:", error);
     }
@@ -188,6 +205,11 @@ const GeneralFanForm = () => {
             Tournament
           </div>
         </li>
+        {insertedData && (
+            <div class="alert alert-success" role="alert">
+              Successfully Inserted!
+            </div>
+        )}
       </ul>
 
       <div className="tab-content">
@@ -345,7 +367,7 @@ const GeneralFanForm = () => {
             <label className="col-form-label">Start Date:</label>
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => setEventStartDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
@@ -353,7 +375,7 @@ const GeneralFanForm = () => {
             <label className="col-form-label">End Date:</label>
             <DatePicker
               selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              onChange={(date) => setEventEndDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
