@@ -14,12 +14,70 @@ const StatisticianForm = () => {
   const [losingTeamName, setLosingTeamName] = useState("");
   const [winningTeamScore, setWinningTeamScore] = useState("");
   const [losingTeamScore, setLosingTeamScore] = useState("");
+  const handleInsertOutcome = async () => {
+    console.log("Inserting Outcome");
+    console.log('Data to be sent:', {Outcome_ID: outcomeID, Sponsor_ID: sponsorID, Event_Name: eventName, Winning_Team_Name: winningTeamName, Losing_Team_Name: losingTeamName, Winning_Team_Score: winningTeamScore, Losing_Team_Score: losingTeamScore});
+    try {
+      const response = await fetch("http://localhost:5000/insertOutcome", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Outcome_ID: outcomeID, //assuming this is a variable
+          Sponsor_ID: sponsorID,
+          Event_Name: eventName,
+          Winning_Team_Name: winningTeamName,
+          Losing_Team_Name: losingTeamName,
+          Winning_Team_Score: winningTeamScore,
+          Losing_Team_Score: losingTeamScore,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Outcome:", data);
+    } catch (error) {
+      console.error("Error inserting outcome:", error);
+    }
+  };
+
 
   // Tab 2 - Tournament
   const [tournamentID, setTournamentID] = useState("");
   const [tournamentName, setTournamentName] = useState("");
-  const [tournamentStartDate, setTournamentStartDate] = useState(null);
-  const [tournamentEndDate, setTournamentEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const handleInsertTournament = async () => {
+    console.log("Inserting Tournament");
+    console.log('Data to be sent:', {Tournament_ID: tournamentID,Name: tournamentName, Start_date: startDate, End_date: endDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertTournament", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Tournament_ID: tournamentID, //assuming this is a variable
+          Name: tournamentName,
+          Start_date: startDate,
+          End_date: endDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Tournament:", data);
+    } catch (error) {
+      console.error("Error inserting tournament:", error);
+    }
+  };
 
   // Tab 3 - Statistic
   const [statisticID, setStatisticID] = useState("");
@@ -29,6 +87,36 @@ const StatisticianForm = () => {
   const [accuracy, setAccuracy] = useState("");
   const [kdRatio, setKDRatio] = useState("");
   const [winRate, setWinRate] = useState("");
+  const handleInsertStatistic = async () => {
+    console.log("Inserting Statistic");
+    console.log('Data to be sent:', {Statistic_ID: statisticID, Player_ID: playerID, Most_used_weapon: mostUsedWeapon, Most_played_character: mostPlayedCharacter, Accuracy: accuracy, K_D_ratio: kdRatio, Win_rate: winRate});
+    try {
+      const response = await fetch("http://localhost:5000/insertStatistic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Statistic_ID: statisticID, //assuming this is a variable
+          Player_ID: playerID,
+          Most_used_weapon: mostUsedWeapon,
+          Most_played_character: mostPlayedCharacter,
+          Accuracy: accuracy,
+          K_D_ratio: kdRatio,
+          Win_rate: winRate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Statistic:", data);
+    } catch (error) {
+      console.error("Error inserting statistic:", error);
+    }
+  }
   
   // Tab 4 - Sponsor
   const [sponsorID, setSponsorID] = useState("");
@@ -36,10 +124,65 @@ const StatisticianForm = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [address, setAddress] = useState("");
+  const handleInsertSponsor = async () => {
+    console.log("Inserting Sponsor");
+    console.log('Data to be sent:', {Sponsor_ID: sponsorID, Name: sponsorName, State: state, Zip_code: zipCode, Address: address});
+    try {
+      const response = await fetch("http://localhost:5000/insertSponsor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Sponsor_ID: sponsorID, //assuming this is a variable
+          Name: sponsorName,
+          State: state,
+          Zip_code: zipCode,
+          Address: address,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Sponsor:", data);
+    } catch (error) {
+      console.error("Error inserting sponsor:", error);
+    }
+  }
 
   // Tab 5 - Sponsors Relationship
   const [contractStartDate, setContractStartDate] = useState(null);
   const [contractEndDate, setContractEndDate] = useState(null);
+  const handleInsertSponsorRelationship = async () => {
+    console.log("Inserting Sponsor Relationship");
+    console.log('Data to be sent:', {Event_Name: eventName, Sponsor_ID: sponsorID, Contract_Start_Date: contractStartDate, Contract_End_Date: contractEndDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertSponsorRelationship", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Event_Name: eventName, //assuming this is a variable
+          Sponsor_ID: sponsorID,
+          Contract_Start_Date: contractStartDate,
+          Contract_End_Date: contractEndDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Sponsor Relationship:", data);
+    } catch (error) {
+      console.error("Error inserting sponsor relationship:", error);
+    }
+  }
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -62,8 +205,8 @@ const StatisticianForm = () => {
     // Handle form submission for Tournament tab
     console.log("Tournament ID:", tournamentID);
     console.log("Tournament Name:", tournamentName);
-    console.log("Start Date:", tournamentStartDate);
-    console.log("End Date:", tournamentEndDate);
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
   };
 
   const handleStatisticSubmit = (e) => {
@@ -182,7 +325,7 @@ const StatisticianForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleOutcomeSubmit}
+              onClick={handleInsertOutcome}
             >
               Submit
             </button>
@@ -211,16 +354,16 @@ const StatisticianForm = () => {
             />
             <label className="col-form-label">Start Date:</label>
             <DatePicker
-              selected={tournamentStartDate}
-              onChange={(date) => setTournamentStartDate(date)}
+              selected={startDate}
+              onChange={(date) => startDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
             <label className="col-form-label">End Date:</label>
             <DatePicker
-              selected={tournamentEndDate}
-              onChange={(date) => setTournamentEndDate(date)}
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
@@ -228,7 +371,7 @@ const StatisticianForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleTournamentSubmit}
+              onClick={handleInsertTournament}
             >
               Submit
             </button>
@@ -293,7 +436,7 @@ const StatisticianForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleStatisticSubmit}
+              onClick={handleInsertStatistic}
             >
               Submit
             </button>
@@ -340,7 +483,11 @@ const StatisticianForm = () => {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertSponsor}
+            >
               Submit
             </button>
           </div>
