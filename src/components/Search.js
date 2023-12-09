@@ -34,6 +34,7 @@ const Search = () => {
     return numbers;
   }, [searchResults, resultsPerPage]);
 
+  //GENERAL DB SEARCH
   const handleSearch = async () => {
     setShouldRenderTable(false);
     console.log("Searching...");
@@ -62,6 +63,7 @@ const Search = () => {
     }
   };
 
+  // TOUNRAMENT GIVES EVENT NAMES IN TOURNAMENT AND SPONSORS
   const handleEventFilter = async () => {
     setShowEventQuery(false);
     if (searchName !== "" && searchItem === "Tournament") {
@@ -88,6 +90,7 @@ const Search = () => {
     }
   };
 
+  //WORKS (TOURNAMENT TEAM STATS AVERAGE)
   const handleTeamFilter = async () => {
     console.log("Handling Team Filter...");
     if (searchName !== "" && searchItem === "Tournament") {
@@ -108,9 +111,10 @@ const Search = () => {
     }
   };
 
+  //DOES NOT WORK YET (GRAB OUTCOMES OF TEAM)
   const handleTeamEventOutcomes = async () => {
     console.log("Handling Team Event Outcomes...");
-    if (searchName !== "" && searchItem === "Tournament") {
+    if (searchName !== "" && searchItem === "Team") {
       try {
         console.log("Filtering Teams for" + searchItem);
         console.log("search name " + searchName);
@@ -127,6 +131,8 @@ const Search = () => {
       }
     }
   };
+
+  //WORKS (FOR PLAYER) AND GRABS STATS OF PLAYER
   const handlePlayerStatSearch = async () => {
     if (searchName !== "" && searchItem === "Player") {
       console.log("Handling Player Stat search...");
@@ -146,6 +152,56 @@ const Search = () => {
       }
     }
   };
+  const handleDeleteRow = (row) => {
+    let rowIdToDelete;
+    const rowKeyMap = {
+      Tournament: "tournament_id",
+      Event: "event_name",
+      Player: "player_id",
+      Team: "team_id",
+      Game: "game_name",
+      Sponsor: "sponsor_id",
+    };
+
+    switch (searchItem) {
+    case "Tournament":
+      rowIdToDelete = row.tournament_id;
+      break;
+    case "Event":
+      rowIdToDelete = row.event_name;
+      break;
+    case "Player":
+      rowIdToDelete = row.player_id;
+      break;
+    case "Team":
+      rowIdToDelete = row.team_id;
+      break;
+    case "Game":
+      rowIdToDelete = row.game_name;
+      break;
+    case "Sponsor":
+      rowIdToDelete = row.sponsor_id;
+      break;
+    default:
+      break;
+  }
+
+  console.log("Row to delete info:", row);
+  console.log("Row ID to delete:", rowIdToDelete);
+
+  // Update the state to reflect the deletion
+  const filteredResults = searchResults.filter(
+    (elem) => elem[rowKeyMap[searchItem]] !== rowIdToDelete
+  );
+
+    setSearchResults([...filteredResults]);
+
+    console.log("Row to delete info:", row);
+    console.log("Row ID to delete:", rowIdToDelete);
+
+    // Call your delete fetch call
+  };
+
   useEffect(() => {
     if (searchResults !== null) {
       console.log("Search Results on re-render:", searchResults);
@@ -243,6 +299,7 @@ const Search = () => {
             handlePlayerStatSearch();
             handleTeamEventOutcomes();
             setShowEventQuery(false);
+            setTeamResults("");
           }}
         >
           Search
@@ -475,6 +532,8 @@ const Search = () => {
                     {key}
                   </th>
                 ))}
+                <th scope="col">Delete</th>
+                <th scope="col">Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -484,6 +543,35 @@ const Search = () => {
                   {Object.values(result).map((value, idx) => (
                     <td key={idx}>{value}</td>
                   ))}
+                  <td>
+                    <button onClick={() => handleDeleteRow(result)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-trash"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                      </svg>
+                    </button>
+                  </td>
+                  <td>
+                    <button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-pen-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                      </svg>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
