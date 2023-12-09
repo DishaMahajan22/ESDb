@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const ManagerExpertForm = () => {
   const [activeTab, setActiveTab] = useState("tab1");
+  const [showToast, setShowToast] = useState(false);
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
@@ -154,8 +155,8 @@ const ManagerExpertForm = () => {
   const [accuracy, setAccuracy] = useState("");
   const [kdRatio, setKDRatio] = useState("");
   const [winRate, setWinRate] = useState("");
+  
   const handleInsertStatistic = async () => {
-    console.log("Inserting Statistic");
     console.log('Data to be sent:', {Statistic_ID: statisticID, Player_ID: playerID, Most_used_weapon: mostUsedWeapon, Most_played_character: mostPlayedCharacter, Accuracy: accuracy, K_D_ratio: kdRatio, Win_rate: winRate});
     try {
       const response = await fetch("http://localhost:5000/insertStatistic", {
@@ -180,8 +181,12 @@ const ManagerExpertForm = () => {
 
       const data = await response.json();
       console.log("Inserted Statistic:", data);
+      setShowToast(true);
     } catch (error) {
       console.error("Error inserting statistic:", error);
+    }
+    finally {
+      setTimeout(() => setShowToast(false), 3000);
     }
   }
 
@@ -320,7 +325,28 @@ const handleInsertPlayerToTeam = async () => {
     console.log("Number of Players:", seats);
   };
   return (
+    <>
     <div>
+    <div
+      className={`toast ${{showToast} ? "show" : ""}`}
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded mr-2" alt="..."/>
+            <strong class="mr-auto">Bootstrap</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body">
+            See? Just like this.
+          </div>
+        </div>
+    </div>
       <ul className="nav nav-tabs mx-5">
         <li className="nav-item">
           <div
@@ -744,6 +770,7 @@ const handleInsertPlayerToTeam = async () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
