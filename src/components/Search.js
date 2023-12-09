@@ -15,7 +15,7 @@ const Search = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [shouldRenderTable, setShouldRenderTable] = useState(false);
   const [showEventQuery, setShowEventQuery] = useState(false);
-  const [resultsPerPage] = useState(25);
+  const [resultsPerPage] = useState(1000);
   const [sponsorFilter, setSponsorFilter] = useState("");
   const [eventFilter, setEventFilter] = useState("");
   const [startDate, setStartDate] = useState("");
