@@ -14,17 +14,98 @@ const ManagerExpertForm = () => {
   const [gamerTag, setGamerTag] = useState("");
   const [dob, setDob] = useState(null);
   const [birthplace, setBirthplace] = useState("");
+  const handleInsertPlayer = async () => {
+    console.log("Inserting Player");
+    console.log('Data to be sent:', {Player_ID: playerID, Name: name, Gamer_tag: gamerTag, DOB: dob, Birthplace: birthplace});
+    try {
+      const response = await fetch("http://localhost:5000/insertPlayer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Player_ID: playerID, //assuming this is a variable
+          Name: name,
+          Gamer_tag: gamerTag,
+          DOB: dob,
+          Birthplace: birthplace,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Player:", data);
+    } catch (error) {
+      console.error("Error inserting player:", error);
+    }
+  }
 
   // Tab 1 - Team
   const [teamID, setTeamID] = useState("");
   const [teamName, setTeamName] = useState("");
   const [ownerName, setOwnerName] = useState("");
+  const handleInsertTeam = async () => {
+    console.log("Inserting Team");
+    console.log('Data to be sent:', {Team_ID: teamID, Name: teamName, Owner_name: ownerName});
+    try {
+      const response = await fetch("http://localhost:5000/insertTeam", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Team_ID: teamID, //assuming this is a variable
+          Name: teamName,
+          Owner_name: ownerName,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Team:", data);
+    } catch (error) {
+      console.error("Error inserting team:", error);
+    }
+  };
 
   // Tab 2 - Tournament
   const [tournamentID, setTournamentID] = useState("");
   const [tournamentName, setTournamentName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const handleInsertTournament = async () => {
+    console.log("Inserting Tournament");
+    console.log('Data to be sent:', {Tournament_ID: tournamentID,Name: tournamentName, Start_date: startDate, End_date: endDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertTournament", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Tournament_ID: tournamentID, //assuming this is a variable
+          Name: tournamentName,
+          Start_date: startDate,
+          End_date: endDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Tournament:", data);
+    } catch (error) {
+      console.error("Error inserting tournament:", error);
+    }
+  };
 
   // Tab 3 - Event
   const [eventName, setEventName] = useState("");
@@ -34,6 +115,36 @@ const ManagerExpertForm = () => {
   const [seats, setSeats] = useState(0);
   const [eventStartDate, setEventStartDate] = useState(null);
   const [eventEndDate, setEventEndDate] = useState(null);
+  const handleInsertEvent = async () => {
+    console.log("Inserting Event");
+    console.log('Data to be sent:', {Event_name: eventName, Sponsor_ID: sponsorId, Tournament_ID: tournamentId, Location: location, Seats: seats, Start_date: eventStartDate, End_date: eventEndDate});
+    try {
+      const response = await fetch("http://localhost:5000/insertEvent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Event_name: eventName, //assuming this is a variable
+          Sponsor_ID: sponsorId,
+          Tournament_ID: tournamentId,
+          Location: location,
+          Seats: seats,
+          Start_date: eventStartDate,
+          End_date: eventEndDate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Event:", data);
+    } catch (error) {
+      console.error("Error inserting event:", error);
+    }
+  }
 
   // Tab 4 - Statistic
   const [statisticID, setStatisticID] = useState("");
@@ -42,6 +153,36 @@ const ManagerExpertForm = () => {
   const [accuracy, setAccuracy] = useState("");
   const [kdRatio, setKDRatio] = useState("");
   const [winRate, setWinRate] = useState("");
+  const handleInsertStatistic = async () => {
+    console.log("Inserting Statistic");
+    console.log('Data to be sent:', {Statistic_ID: statisticID, Player_ID: playerID, Most_used_weapon: mostUsedWeapon, Most_played_character: mostPlayedCharacter, Accuracy: accuracy, K_D_ratio: kdRatio, Win_rate: winRate});
+    try {
+      const response = await fetch("http://localhost:5000/insertStatistic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Statistic_ID: statisticID, //assuming this is a variable
+          Player_ID: playerID,
+          Most_used_weapon: mostUsedWeapon,
+          Most_played_character: mostPlayedCharacter,
+          Accuracy: accuracy,
+          K_D_ratio: kdRatio,
+          Win_rate: winRate,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Statistic:", data);
+    } catch (error) {
+      console.error("Error inserting statistic:", error);
+    }
+  }
 
   // Tab 5 - Game
   const [gameName, setGameName] = useState("");
@@ -49,7 +190,66 @@ const ManagerExpertForm = () => {
   const [genre, setGenre] = useState("");
   const [creator, setCreator] = useState("");
   const [teamSize, setTeamSize] = useState("");
+  const handleInsertGame = async () => {
+    console.log("Inserting Game");
+    console.log('Data to be sent:', {Game_name: gameName, Sequel_number: sequelNumber, Genre: genre, Creator: creator, Team_size: teamSize});
+    try {
+      const response = await fetch("http://localhost:5000/insertGame", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Game_name: gameName, //assuming this is a variable
+          Sequel_number: sequelNumber,
+          Genre: genre,
+          Creator: creator,
+          Team_size: teamSize,
+        }),
+      });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Inserted Game:", data);
+    } catch (error) {
+      console.error("Error inserting game:", error);
+    }
+  }
+
+  // Tab 6 - Player to Team
+const [PlayerToTeamPlayerID, setPlayerToTeamPlayerID] = useState("");
+const [PlayerToTeamTeamID, setPlayerToTeamTeamID] = useState("");
+const [PlayerToTeamSeats, setPlayerToTeamSeats] = useState("");
+const handleInsertPlayerToTeam = async () => {
+  console.log("Inserting Player To Team");
+  console.log('Data to be sent:', {Player_ID: PlayerToTeamPlayerID, Team_ID: PlayerToTeamTeamID, Seats: PlayerToTeamSeats});
+  try {
+    const response = await fetch("http://localhost:5000/insertPlayerToTeam", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Player_ID: PlayerToTeamPlayerID, //assuming this is a variable
+        Team_ID: PlayerToTeamTeamID,
+        Seats: PlayerToTeamSeats,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Inserted Player To Team:", data);
+  } catch (error) {
+    console.error("Error inserting player to team:", error);
+  }
+}
+  
 
   //Tab 1
   const handleTeamSubmit = (e) => {
@@ -77,6 +277,46 @@ const ManagerExpertForm = () => {
     console.log("Accuracy:", accuracy);
     console.log("K/D Ratio:", kdRatio);
     console.log("Win Rate:", winRate);
+  };
+
+  // Tab 4 - Game
+  const handleGameSubmit = (e) => {
+    e.preventDefault();
+    console.log("Game Name:", gameName);
+    console.log("Sequel Number:", sequelNumber);
+    console.log("Genre:", genre);
+    console.log("Creator:", creator);
+    console.log("Team Size:", teamSize);
+  };
+
+  // Tab 5 - Player
+  const handlePlayerSubmit = (e) => {
+    e.preventDefault();
+    console.log("Player ID:", playerID);
+    console.log("Name:", name);
+    console.log("Gamer Tag:", gamerTag);
+    console.log("DOB:", dob);
+    console.log("Birthplace:", birthplace);
+  };
+
+  // Tab 6 - Event
+  const handleEventSubmit = (e) => {
+    e.preventDefault();
+    console.log("Event Name:", eventName);
+    console.log("Sponsor ID:", sponsorId);
+    console.log("Tournament ID:", tournamentId);
+    console.log("Location:", location);
+    console.log("Seats:", seats);
+    console.log("Start Date:", eventStartDate);
+    console.log("End Date:", eventEndDate);
+  };
+
+  // Tab 7 - Player to Team
+  const handlePlayerToTeamSubmit = (e) => {
+    e.preventDefault();
+    console.log("Player ID:", playerID);
+    console.log("Team ID:", teamID);
+    console.log("Number of Players:", seats);
   };
   return (
     <div>
@@ -189,7 +429,11 @@ const ManagerExpertForm = () => {
               value={birthplace}
               onChange={(e) => setBirthplace(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertPlayer}
+            >
               Submit
             </button>
           </div>
@@ -224,7 +468,7 @@ const ManagerExpertForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleTeamSubmit}
+              onClick={handleInsertTeam}
             >
               Submit
             </button>
@@ -270,7 +514,7 @@ const ManagerExpertForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleTournamentSubmit}
+              onClick={handleInsertTournament}
             >
               Submit
             </button>
@@ -337,7 +581,11 @@ const ManagerExpertForm = () => {
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertEvent}
+            >
               Submit
             </button>
           </div>
@@ -401,7 +649,7 @@ const ManagerExpertForm = () => {
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleStatisticSubmit}
+              onClick={handleInsertStatistic}
             >
               Submit
             </button>
@@ -448,7 +696,11 @@ const ManagerExpertForm = () => {
               value={teamSize}
               onChange={(e) => setTeamSize(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertGame}
+            >
               Submit
             </button>
           </div>
@@ -473,7 +725,18 @@ const ManagerExpertForm = () => {
               value={teamID}
               onChange={(e) => setTeamID(e.target.value)}
             />
-            <button type="button" className="btn btn-outline-dark btn-sm mt-3">
+            <label className="col-form-label">Number of Players:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={seats}
+              onChange={(e) => setSeats(e.target.value)}
+            />
+              <button
+              type="button"
+              className="btn btn-outline-dark btn-sm mt-3"
+              onClick={handleInsertPlayerToTeam}
+            >
               Submit
             </button>
           </div>
