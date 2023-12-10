@@ -94,9 +94,21 @@ const GeneralFanForm = () => {
   const [seats, setSeats] = useState(0);
   const [eventStartDate, setEventStartDate] = useState(null);
   const [eventEndDate, setEventEndDate] = useState(null);
+  const [contractStartDate, setContractStartDate] = useState(null);
+  const [contractEndDate, setContractEndDate] = useState(null);
   const handleInsertEvent = async () => {
     console.log("Inserting Event");
-    console.log('Data to be sent:', {Event_name: eventName, Sponsor_ID: sponsorId, Tournament_ID: tournamentId, Location: location, Seats: seats, Start_date: eventStartDate, End_date: eventEndDate});
+    console.log("Data to be sent:", {
+      Event_name: eventName,
+      Sponsor_ID: sponsorId,
+      Tournament_ID: tournamentId,
+      Location: location,
+      Seats: seats,
+      Start_date: eventStartDate,
+      End_date: eventEndDate,
+      Contract_start_date: contractStartDate,
+      Contract_end_date: contractEndDate,
+    });
     try {
       const response = await fetch("http://localhost:5000/insertEvent", {
         method: "POST",
@@ -111,6 +123,8 @@ const GeneralFanForm = () => {
           Seats: seats,
           Start_date: eventStartDate,
           End_date: eventEndDate,
+          Contract_start_date: contractStartDate,
+          Contract_end_date: contractEndDate,
         }),
       });
 
@@ -127,7 +141,7 @@ const GeneralFanForm = () => {
     } catch (error) {
       console.error("Error inserting event:", error);
     }
-  }
+  };
 
   // Tab 4 - Tournament
   const [tournamentID, setTournamentID] = useState("");
@@ -366,7 +380,7 @@ const GeneralFanForm = () => {
             />
             <label className="col-form-label">Start Date:</label>
             <DatePicker
-              selected={startDate}
+              selected={eventStartDate}
               onChange={(date) => setEventStartDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
@@ -374,12 +388,28 @@ const GeneralFanForm = () => {
             />
             <label className="col-form-label">End Date:</label>
             <DatePicker
-              selected={endDate}
+              selected={eventEndDate}
               onChange={(date) => setEventEndDate(date)}
               className="form-control mb-3"
               dateFormat="MM/dd/yyyy"
               placeholderText="MM/DD/YYYY"
             />
+            <label className="col-form-label">Contract Start Date:</label>
+              <DatePicker
+                selected={contractStartDate}
+                onChange={(date) => setContractStartDate(date)}
+                className="form-control mb-3"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+              />
+              <label className="col-form-label">Contract End Date:</label>
+              <DatePicker
+                selected={contractEndDate}
+                onChange={(date) => setContractEndDate(date)}
+                className="form-control mb-3"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+              />
             <button
               type="button"
               className="btn btn-outline-dark btn-sm mt-3"

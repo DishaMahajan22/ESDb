@@ -147,6 +147,8 @@ const ManagerExpertForm = () => {
   const [seats, setSeats] = useState(0);
   const [eventStartDate, setEventStartDate] = useState(null);
   const [eventEndDate, setEventEndDate] = useState(null);
+  const [contractStartDate, setContractStartDate] = useState(null);
+  const [contractEndDate, setContractEndDate] = useState(null);
   const handleInsertEvent = async () => {
     console.log("Inserting Event");
     console.log("Data to be sent:", {
@@ -157,6 +159,8 @@ const ManagerExpertForm = () => {
       Seats: seats,
       Start_date: eventStartDate,
       End_date: eventEndDate,
+      Contract_start_date: contractStartDate,
+      Contract_end_date: contractEndDate,
     });
     try {
       const response = await fetch("http://localhost:5000/insertEvent", {
@@ -172,6 +176,8 @@ const ManagerExpertForm = () => {
           Seats: seats,
           Start_date: eventStartDate,
           End_date: eventEndDate,
+          Contract_start_date: contractStartDate,
+          Contract_end_date: contractEndDate,
         }),
       });
 
@@ -652,6 +658,22 @@ const ManagerExpertForm = () => {
               <DatePicker
                 selected={eventEndDate}
                 onChange={(date) => setEventEndDate(date)}
+                className="form-control mb-3"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+              />
+              <label className="col-form-label">Contract Start Date:</label>
+              <DatePicker
+                selected={contractStartDate}
+                onChange={(date) => setContractStartDate(date)}
+                className="form-control mb-3"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+              />
+              <label className="col-form-label">Contract End Date:</label>
+              <DatePicker
+                selected={contractEndDate}
+                onChange={(date) => setContractEndDate(date)}
                 className="form-control mb-3"
                 dateFormat="MM/dd/yyyy"
                 placeholderText="MM/DD/YYYY"

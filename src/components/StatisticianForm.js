@@ -7,13 +7,13 @@ const StatisticianForm = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [insertedData, setInsertedData] = useState(false);
   // Tab 1 - Outcome
-  const [outcomeID, setOutcomeID] = useState("");
+  const [outcomeID, setOutcomeID] = useState(0);
     //get sponsor id from other state
   const [eventName, setEventName] = useState("");
   const [winningTeamName, setWinningTeamName] = useState("");
   const [losingTeamName, setLosingTeamName] = useState("");
-  const [winningTeamScore, setWinningTeamScore] = useState("");
-  const [losingTeamScore, setLosingTeamScore] = useState("");
+  const [winningTeamScore, setWinningTeamScore] = useState(0);
+  const [losingTeamScore, setLosingTeamScore] = useState(0);
   const handleInsertOutcome = async () => {
     console.log("Inserting Outcome");
     console.log('Data to be sent:', {Outcome_ID: outcomeID, Sponsor_ID: sponsorID, Event_Name: eventName, Winning_Team_Name: winningTeamName, Losing_Team_Name: losingTeamName, Winning_Team_Score: winningTeamScore, Losing_Team_Score: losingTeamScore});
@@ -51,7 +51,7 @@ const StatisticianForm = () => {
 
 
   // Tab 2 - Tournament
-  const [tournamentID, setTournamentID] = useState("");
+  const [tournamentID, setTournamentID] = useState(0);
   const [tournamentName, setTournamentName] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -88,8 +88,8 @@ const StatisticianForm = () => {
   };
 
   // Tab 3 - Statistic
-  const [statisticID, setStatisticID] = useState("");
-  const [playerID, setPlayerID] = useState("");
+  const [statisticID, setStatisticID] = useState(0);
+  const [playerID, setPlayerID] = useState(0);
   const [mostUsedWeapon, setMostUsedWeapon] = useState("");
   const [mostPlayedCharacter, setMostPlayedCharacter] = useState("");
   const [accuracy, setAccuracy] = useState("");
@@ -131,7 +131,7 @@ const StatisticianForm = () => {
   }
   
   // Tab 4 - Sponsor
-  const [sponsorID, setSponsorID] = useState("");
+  const [sponsorID, setSponsorID] = useState(0);
   const [sponsorName, setSponsorName] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -170,6 +170,8 @@ const StatisticianForm = () => {
   }
 
   // Tab 5 - Sponsors Relationship
+  const [contractEventName, setContractEventName] = useState("");
+  const [contractSponsorID, setContractSponsorID] = useState(0);
   const [contractStartDate, setContractStartDate] = useState(null);
   const [contractEndDate, setContractEndDate] = useState(null);
   const handleInsertSponsorsRelationship = async () => {
@@ -182,8 +184,8 @@ const StatisticianForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Event_Name: eventName, //assuming this is a variable
-          Sponsor_ID: sponsorID,
+          Contract_Event_Name: contractEventName, //assuming this is a variable
+          Contract_Sponsor_ID: contractSponsorID,
           Contract_Start_Date: contractStartDate,
           Contract_End_Date: contractEndDate,
         }),
@@ -527,15 +529,15 @@ const StatisticianForm = () => {
             <input
               type="text"
               className="form-control mb-3"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
+              value={contractEventName}
+              onChange={(e) => setContractEventName(e.target.value)}
             />
             <label className="col-form-label">Sponsor ID:</label>
             <input
               type="text"
               className="form-control mb-3"
-              value={sponsorID}
-              onChange={(e) => setSponsorID(e.target.value)}
+              value={contractSponsorID}
+              onChange={(e) => setContractSponsorID(e.target.value)}
             />
             <label className="col-form-label">Contract Start Date:</label>
             <DatePicker
