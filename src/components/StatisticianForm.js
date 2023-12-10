@@ -6,48 +6,64 @@ import "react-datepicker/dist/react-datepicker.css";
 const StatisticianForm = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [insertedData, setInsertedData] = useState(false);
-  // Tab 1 - Outcome
-  const [outcomeID, setOutcomeID] = useState(0);
-    //get sponsor id from other state
-  const [eventName, setEventName] = useState("");
-  const [winningTeamName, setWinningTeamName] = useState("");
-  const [losingTeamName, setLosingTeamName] = useState("");
-  const [winningTeamScore, setWinningTeamScore] = useState(0);
-  const [losingTeamScore, setLosingTeamScore] = useState(0);
-  const handleInsertOutcome = async () => {
-    console.log("Inserting Outcome");
-    console.log('Data to be sent:', {Outcome_ID: outcomeID, Sponsor_ID: sponsorID, Event_Name: eventName, Winning_Team_Name: winningTeamName, Losing_Team_Name: losingTeamName, Winning_Team_Score: winningTeamScore, Losing_Team_Score: losingTeamScore});
-    try {
-      const response = await fetch("http://localhost:5000/insertOutcome", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Outcome_ID: outcomeID, //assuming this is a variable
-          Sponsor_ID: sponsorID,
-          Event_Name: eventName,
-          Winning_Team_Name: winningTeamName,
-          Losing_Team_Name: losingTeamName,
-          Winning_Team_Score: winningTeamScore,
-          Losing_Team_Score: losingTeamScore,
-        }),
-      });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+// Tab 1 - Outcome
+const [outcomeID, setOutcomeID] = useState(0);
+const [outcomeSponsorID, setOutcomeSponsorID] = useState(0);
+const [eventName, setEventName] = useState("");
+const [winningTeam, setWinningTeam] = useState("");
+const [losingTeam, setLosingTeam] = useState("");
+const [winningScore, setWinningScore] = useState(0);
+const [losingScore, setLosingScore] = useState(0);
+const [duration, setDuration] = useState("");
+const [winner, setWinner] = useState("");
 
-      const data = await response.json();
-      console.log("Inserted Outcome:", data);
-      setInsertedData(true);
-      setTimeout(() => {
-        setInsertedData(false);
-      }, 3000);
-    } catch (error) {
-      console.error("Error inserting outcome:", error);
+const handleInsertOutcome = async () => {
+  console.log("Inserting Outcome");
+  console.log('Data to be sent:', {
+    Outcome_ID: outcomeID,
+    Sponsor_ID: outcomeSponsorID,
+    Event_Name: eventName,
+    Winning_Team: winningTeam,
+    Losing_Team: losingTeam,
+    Winning_Score: winningScore,
+    Losing_Score: losingScore,
+    Duration: duration,
+    Winner: winner
+  });
+  try {
+    const response = await fetch("http://localhost:5000/insertOutcome", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Outcome_ID: outcomeID,
+        Sponsor_ID: outcomeSponsorID,
+        Event_Name: eventName,
+        Winning_Team: winningTeam,
+        Losing_Team: losingTeam,
+        Winning_Score: winningScore,
+        Losing_Score: losingScore,
+        Duration: duration,
+        Winner: winner
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  };
+
+    const data = await response.json();
+    console.log("Inserted Outcome:", data);
+    setInsertedData(true);
+    setTimeout(() => {
+      setInsertedData(false);
+    }, 3000);
+  } catch (error) {
+    console.error("Error inserting outcome:", error);
+  }
+};
 
 
   // Tab 2 - Tournament
@@ -95,9 +111,19 @@ const StatisticianForm = () => {
   const [accuracy, setAccuracy] = useState("");
   const [kdRatio, setKDRatio] = useState("");
   const [winRate, setWinRate] = useState("");
+  const [statDate, setStatDate] = useState(null);
   const handleInsertStatistic = async () => {
     console.log("Inserting Statistic");
-    console.log('Data to be sent:', {Statistic_ID: statisticID, Player_ID: playerID, Most_used_weapon: mostUsedWeapon, Most_played_character: mostPlayedCharacter, Accuracy: accuracy, K_D_ratio: kdRatio, Win_rate: winRate});
+    console.log('Data to be sent:', {
+      Statistic_ID: statisticID,
+      Player_ID: playerID,
+      Most_used_weapon: mostUsedWeapon,
+      Most_played_character: mostPlayedCharacter,
+      Accuracy: accuracy,
+      K_D_ratio: kdRatio,
+      Win_rate: winRate,
+      Stat_Date: statDate
+    });
     try {
       const response = await fetch("http://localhost:5000/insertStatistic", {
         method: "POST",
@@ -105,20 +131,21 @@ const StatisticianForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Statistic_ID: statisticID, //assuming this is a variable
+          Statistic_ID: statisticID,
           Player_ID: playerID,
           Most_used_weapon: mostUsedWeapon,
           Most_played_character: mostPlayedCharacter,
           Accuracy: accuracy,
           K_D_ratio: kdRatio,
           Win_rate: winRate,
+          Stat_Date: statDate
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       console.log("Inserted Statistic:", data);
       setInsertedData(true);
@@ -128,17 +155,23 @@ const StatisticianForm = () => {
     } catch (error) {
       console.error("Error inserting statistic:", error);
     }
-  }
+  };
   
   // Tab 4 - Sponsor
-  const [sponsorID, setSponsorID] = useState(0);
-  const [sponsorName, setSponsorName] = useState("");
+  const [sponsorID, setSponsorID] = useState("");
+  const [name, setName] = useState("");
   const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const handleInsertSponsor = async () => {
     console.log("Inserting Sponsor");
-    console.log('Data to be sent:', {Sponsor_ID: sponsorID, Name: sponsorName, State: state, Zip_code: zipCode, Address: address});
+    console.log('Data to be sent:', {
+      Sponsor_ID: sponsorID,
+      Name: name,
+      State: state,
+      Zipcode: zipcode,
+      Address: address
+    });
     try {
       const response = await fetch("http://localhost:5000/insertSponsor", {
         method: "POST",
@@ -146,18 +179,18 @@ const StatisticianForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Sponsor_ID: sponsorID, //assuming this is a variable
-          Name: sponsorName,
+          Sponsor_ID: sponsorID,
+          Name: name,
           State: state,
-          Zip_code: zipCode,
-          Address: address,
+          Zipcode: zipcode,
+          Address: address
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       console.log("Inserted Sponsor:", data);
       setInsertedData(true);
@@ -167,44 +200,7 @@ const StatisticianForm = () => {
     } catch (error) {
       console.error("Error inserting sponsor:", error);
     }
-  }
-
-  // Tab 5 - Sponsors Relationship
-  const [contractEventName, setContractEventName] = useState("");
-  const [contractSponsorID, setContractSponsorID] = useState(0);
-  const [contractStartDate, setContractStartDate] = useState(null);
-  const [contractEndDate, setContractEndDate] = useState(null);
-  const handleInsertSponsorsRelationship = async () => {
-    console.log("Inserting Sponsors Relationship");
-    console.log('Data to be sent:', {Event_Name: eventName, Sponsor_ID: sponsorID, Contract_Start_Date: contractStartDate, Contract_End_Date: contractEndDate});
-    try {
-      const response = await fetch("http://localhost:5000/insertSponsorRelationship", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Contract_Event_Name: contractEventName, //assuming this is a variable
-          Contract_Sponsor_ID: contractSponsorID,
-          Contract_Start_Date: contractStartDate,
-          Contract_End_Date: contractEndDate,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Inserted Sponsor Relationship:", data);
-      setInsertedData(true);
-      setTimeout(() => {
-        setInsertedData(false);
-      }, 3000);
-    } catch (error) {
-      console.error("Error inserting sponsor relationship:", error);
-    }
-  }
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -278,14 +274,6 @@ const StatisticianForm = () => {
             Sponsor
           </div>
         </li>
-        <li className="nav-item">
-          <div
-            className={`nav-link ${activeTab === "tab5" ? "active" : ""}`}
-            onClick={() => handleTabChange("tab5")}
-          >
-            Add Sponsor To Event
-          </div>
-        </li>
         {insertedData && (
             <div class="alert alert-success" role="alert">
               Successfully Inserted!
@@ -294,69 +282,84 @@ const StatisticianForm = () => {
       </ul>
 
       <div className="tab-content">
-        <div
-          className={`tab-pane fade ${
-            activeTab === "tab1" ? "show active" : ""
-          }`}
-        >
-          <div className="d-flex flex-column mx-5 my-5">
-            <label className="col-form-label">Outcome ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={outcomeID}
-              onChange={(e) => setOutcomeID(e.target.value)}
-            />
-            <label className="col-form-label">Sponsor ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={sponsorID}
-              onChange={(e) => setSponsorID(e.target.value)}
-            />
-            <label className="col-form-label">Event Name:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-            />
-            <label className="col-form-label">Winning Team Name:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={winningTeamName}
-              onChange={(e) => setWinningTeamName(e.target.value)}
-            />
-            <label className="col-form-label">Losing Team Name:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={losingTeamName}
-              onChange={(e) => setLosingTeamName(e.target.value)}
-            />
-            <label className="col-form-label">Winning Team Score:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={winningTeamScore}
-              onChange={(e) => setWinningTeamScore(e.target.value)}
-            />
-            <label className="col-form-label">Losing Team Score:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={losingTeamScore}
-              onChange={(e) => setLosingTeamScore(e.target.value)}
-            />
-            <button
-              type="button"
-              className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleInsertOutcome}
+            <div
+              className={`tab-pane fade ${
+                activeTab === "tab1" ? "show active" : ""
+              }`}
             >
-              Submit
-            </button>
-          </div>
+
+        <div className="d-flex flex-column mx-5 my-5">
+      <label className="col-form-label">Outcome ID:</label>
+      <input
+        type="number"
+        className="form-control mb-3"
+        value={outcomeID}
+        onChange={(e) => setOutcomeID(e.target.value)}
+      />
+      <label className="col-form-label">Sponsor ID:</label>
+      <input
+        type="number"
+        className="form-control mb-3"
+        value={outcomeSponsorID}
+        onChange={(e) => setOutcomeSponsorID(e.target.value)}
+      />
+      <label className="col-form-label">Event Name:</label>
+      <input
+        type="text"
+        className="form-control mb-3"
+        value={eventName}
+        onChange={(e) => setEventName(e.target.value)}
+      />
+      <label className="col-form-label">Winning Team:</label>
+      <input
+        type="text"
+        className="form-control mb-3"
+        value={winningTeam}
+        onChange={(e) => setWinningTeam(e.target.value)}
+      />
+      <label className="col-form-label">Losing Team:</label>
+      <input
+        type="text"
+        className="form-control mb-3"
+        value={losingTeam}
+        onChange={(e) => setLosingTeam(e.target.value)}
+      />
+      <label className="col-form-label">Winning Score:</label>
+      <input
+        type="number"
+        className="form-control mb-3"
+        value={winningScore}
+        onChange={(e) => setWinningScore(e.target.value)}
+      />
+      <label className="col-form-label">Losing Score:</label>
+      <input
+        type="number"
+        className="form-control mb-3"
+        value={losingScore}
+        onChange={(e) => setLosingScore(e.target.value)}
+      />
+      <label className="col-form-label">Duration:</label>
+      <input
+        type="text"
+        className="form-control mb-3"
+        value={duration}
+        onChange={(e) => setDuration(e.target.value)}
+      />
+      <label className="col-form-label">Winner:</label>
+      <input
+        type="text"
+        className="form-control mb-3"
+        value={winner}
+        onChange={(e) => setWinner(e.target.value)}
+      />
+      <button
+        type="button"
+        className="btn btn-outline-dark btn-sm mt-3"
+        onClick={handleInsertOutcome}
+      >
+        Submit
+      </button>
+    </div>
         </div>
 
         <div
@@ -411,158 +414,127 @@ const StatisticianForm = () => {
           }`}
         >
           <div className="d-flex flex-column mx-5 my-5">
-            <label className="col-form-label">Statistic ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={statisticID}
-              onChange={(e) => setStatisticID(e.target.value)}
-            />
-            <label className="col-form-label">Player ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={playerID}
-              onChange={(e) => setPlayerID(e.target.value)}
-            />
-            <label className="col-form-label">Most Used Weapon:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={mostUsedWeapon}
-              onChange={(e) => setMostUsedWeapon(e.target.value)}
-            />
-            <label className="col-form-label">Most Played Character:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={mostPlayedCharacter}
-              onChange={(e) => setMostPlayedCharacter(e.target.value)}
-            />
-            <label className="col-form-label">Accuracy:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={accuracy}
-              onChange={(e) => setAccuracy(e.target.value)}
-            />
-            <label className="col-form-label">K/D Ratio:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={kdRatio}
-              onChange={(e) => setKDRatio(e.target.value)}
-            />
-            <label className="col-form-label">Win Rate:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={winRate}
-              onChange={(e) => setWinRate(e.target.value)}
-            />
-            <button
-              type="button"
-              className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleInsertStatistic}
-            >
-              Submit
-            </button>
-          </div>
+              <label className="col-form-label">Statistic ID:</label>
+              <input
+                type="number"
+                className="form-control mb-3"
+                value={statisticID}
+                onChange={(e) => setStatisticID(e.target.value)}
+              />
+              <label className="col-form-label">Player ID:</label>
+              <input
+                type="number"
+                className="form-control mb-3"
+                value={playerID}
+                onChange={(e) => setPlayerID(e.target.value)}
+              />
+              <label className="col-form-label">Most Used Weapon:</label>
+              <input
+                type="text"
+                className="form-control mb-3"
+                value={mostUsedWeapon}
+                onChange={(e) => setMostUsedWeapon(e.target.value)}
+              />
+              <label className="col-form-label">Most Played Character:</label>
+              <input
+                type="text"
+                className="form-control mb-3"
+                value={mostPlayedCharacter}
+                onChange={(e) => setMostPlayedCharacter(e.target.value)}
+              />
+              <label className="col-form-label">Accuracy:</label>
+              <input
+                type="number"
+                className="form-control mb-3"
+                value={accuracy}
+                onChange={(e) => setAccuracy(e.target.value)}
+              />
+              <label className="col-form-label">K/D Ratio:</label>
+              <input
+                type="number"
+                className="form-control mb-3"
+                value={kdRatio}
+                onChange={(e) => setKDRatio(e.target.value)}
+              />
+              <label className="col-form-label">Win Rate:</label>
+              <input
+                type="number"
+                className="form-control mb-3"
+                value={winRate}
+                onChange={(e) => setWinRate(e.target.value)}
+              />
+              <label className="col-form-label">Stat Date:</label>
+              <DatePicker
+                selected={statDate}
+                onChange={(date) => setStatDate(date)}
+                className="form-control mb-3"
+                dateFormat="MM/dd/yyyy"
+                placeholderText="MM/DD/YYYY"
+              />
+              <button
+                type="button"
+                className="btn btn-outline-dark btn-sm mt-3"
+                onClick={handleInsertStatistic}
+              >
+                Submit
+              </button>
+            </div>
         </div>
         <div
           className={`tab-pane fade ${
             activeTab === "tab4" ? "show active" : ""
           }`}
         >
-          <div className="d-flex flex-column mx-5 my-5">
-            <label className="col-form-label">Sponsor ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={sponsorID}
-              onChange={(e) => setSponsorID(e.target.value)}
-            />
-            <label className="col-form-label">Name:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={sponsorName}
-              onChange={(e) => setSponsorName(e.target.value)}
-            />
-            <label className="col-form-label">State:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-            <label className="col-form-label">Zip Code:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
-            />
-            <label className="col-form-label">Address:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <button
-              type="button"
-              className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleInsertSponsor}
-            >
-              Submit
-            </button>
-          </div>
+        <div className="d-flex flex-column mx-5 my-5">
+          <label className="col-form-label">Sponsor ID:</label>
+          <input
+            type="number"
+            className="form-control mb-3"
+            value={sponsorID}
+            onChange={(e) => setSponsorID(e.target.value)}
+          />
+          <label className="col-form-label">Name:</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label className="col-form-label">State:</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          />
+          <label className="col-form-label">Zipcode:</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={zipcode}
+            onChange={(e) => setZipcode(e.target.value)}
+          />
+          <label className="col-form-label">Address:</label>
+          <input
+            type="text"
+            className="form-control mb-3"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <button
+            type="button"
+            className="btn btn-outline-dark btn-sm mt-3"
+            onClick={handleInsertSponsor}
+          >
+            Submit
+          </button>
+        </div>
         </div>
         <div
           className={`tab-pane fade ${
             activeTab === "tab5" ? "show active" : ""
           }`}
         >
-          <div className="d-flex flex-column mx-5 my-5">
-            <label className="col-form-label">Event Name:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={contractEventName}
-              onChange={(e) => setContractEventName(e.target.value)}
-            />
-            <label className="col-form-label">Sponsor ID:</label>
-            <input
-              type="text"
-              className="form-control mb-3"
-              value={contractSponsorID}
-              onChange={(e) => setContractSponsorID(e.target.value)}
-            />
-            <label className="col-form-label">Contract Start Date:</label>
-            <DatePicker
-              selected={contractStartDate}
-              onChange={(date) => setContractStartDate(date)}
-              className="form-control mb-3"
-              dateFormat="MM/dd/yyyy"
-              placeholderText="MM/DD/YYYY"
-            />
-            <label className="col-form-label">Contract End Date:</label>
-            <DatePicker
-              selected={contractEndDate}
-              onChange={(date) => setContractEndDate(date)}
-              className="form-control mb-3"
-              dateFormat="MM/dd/yyyy"
-              placeholderText="MM/DD/YYYY"
-            />
-            <button
-              type="button"
-              className="btn btn-outline-dark btn-sm mt-3"
-              onClick={handleInsertSponsorsRelationship}
-            >
-              Submit
-            </button>
-          </div>
         </div>
       </div>
     </div>
