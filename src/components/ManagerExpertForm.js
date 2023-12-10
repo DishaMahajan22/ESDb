@@ -14,7 +14,7 @@ const ManagerExpertForm = () => {
   };
   // Tab 0 - Player
   const [playerID, setPlayerID] = useState("");
-  const [playerStatisticID, setPlayerStatisticID] = useState("");
+  const [playerStatisticID, setPlayerStatisticID] = useState(0);
   const [name, setName] = useState("");
   const [gamerTag, setGamerTag] = useState("");
   const [dob, setDob] = useState(null);
@@ -75,7 +75,7 @@ const ManagerExpertForm = () => {
       Team_ID: teamID,
       Name: teamName,
       Owner_Name: ownerName,
-      Game_name: gameName,
+      Game_name: teamGameName,
       Match_date: matchDate,
     });
     try {
@@ -87,7 +87,7 @@ const ManagerExpertForm = () => {
         body: JSON.stringify({
           Team_ID: teamID, //assuming this is a variable
           Name: teamName,
-          Owner_name: ownerName,
+          Owner_Name: ownerName,
           Game_name: teamGameName,
           Match_date: matchDate,
         }),
@@ -156,6 +156,7 @@ const ManagerExpertForm = () => {
   const [eventTournamentID, setEventTournamentID] = useState("");
   const [location, setLocation] = useState("");
   const [seats, setSeats] = useState("");
+  const [eventGameName, setEventGameName] = useState("");
   const [eventStartDate, setEventStartDate] = useState(null);
   const [eventEndDate, setEventEndDate] = useState(null);
   const [eventContractStartDate, setEventContractStartDate] = useState(null);
@@ -167,6 +168,7 @@ const ManagerExpertForm = () => {
       Event_name: eventName,
       Sponsor_ID: sponsorID,
       Tournament_ID: eventTournamentID,
+      Game_name: eventGameName,
       Location: location,
       Seats: seats,
       Start_date: eventStartDate,
@@ -185,6 +187,7 @@ const ManagerExpertForm = () => {
           Event_name: eventName,
           Sponsor_ID: sponsorID,
           Tournament_ID: eventTournamentID,
+          Game_name: eventGameName,
           Location: location,
           Seats: seats,
           Start_date: eventStartDate,
@@ -239,7 +242,7 @@ const ManagerExpertForm = () => {
         },
         body: JSON.stringify({
           Statistic_ID: statisticID,
-          Player_ID: playerID,
+          Player_ID: statisticPlayerID,
           Most_used_weapon: mostUsedWeapon,
           Most_played_character: mostPlayedCharacter,
           Accuracy: accuracy,
@@ -273,8 +276,8 @@ const ManagerExpertForm = () => {
   const handleInsertGame = async () => {
     console.log("Inserting Game");
     console.log("Data to be sent:", {
-      Game_name: gameName,
-      Sequel_number: sequelNumber,
+      Game_Name: gameName,
+      Sequel_Number: sequelNumber,
       Genre: genre,
       Creator: creator,
       Team_size: teamSize,
@@ -286,8 +289,8 @@ const ManagerExpertForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Game_name: gameName, //assuming this is a variable
-          Sequel_number: sequelNumber,
+          Game_Name: gameName, //assuming this is a variable
+          Sequel_Number: sequelNumber,
           Genre: genre,
           Creator: creator,
           Team_size: teamSize,
@@ -417,7 +420,7 @@ const ManagerExpertForm = () => {
               className={`nav-link ${activeTab === "tab4" ? "active" : ""}`}
               onClick={() => handleTabChange("tab4")}
             >
-              Statistic
+              Insert Statistic For Player
             </div>
           </li>
           <li className="nav-item">
@@ -450,7 +453,7 @@ const ManagerExpertForm = () => {
                 value={playerID}
                 onChange={(e) => setPlayerID(e.target.value)}
               />
-              <label className="col-form-label">Statistic ID:</label>
+              <label className="col-form-label">Statistic ID (For No Statistic Give Value 0):</label>
               <input
                 type="number"
                 className="form-control mb-3"
@@ -628,6 +631,13 @@ const ManagerExpertForm = () => {
               className="form-control mb-3"
               value={eventTournamentID}
               onChange={(e) => setEventTournamentID(e.target.value)}
+            />
+            <label className="col-form-label">Event Game Name:</label>
+            <input
+              type="text"
+              className="form-control mb-3"
+              value={eventGameName}
+              onChange={(e) => setEventGameName(e.target.value)}
             />
             <label className="col-form-label">Location:</label>
             <input

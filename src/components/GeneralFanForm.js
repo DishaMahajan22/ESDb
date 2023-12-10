@@ -9,12 +9,11 @@ const GeneralFanForm = () => {
   // Tab 1 - Player
    // Tab 0 - Player
    const [playerID, setPlayerID] = useState("");
-   const [playerStatisticID, setPlayerStatisticID] = useState("");
+   const [playerStatisticID, setPlayerStatisticID] = useState(0);
    const [name, setName] = useState("");
    const [gamerTag, setGamerTag] = useState("");
    const [dob, setDob] = useState(null);
    const [birthplace, setBirthplace] = useState("");
-   const [numberOfPlayers, setNumberOfPlayers] = useState("");
    const handleInsertPlayer = async () => {
      console.log("Inserting Player");
      console.log('Data to be sent:', {
@@ -24,7 +23,6 @@ const GeneralFanForm = () => {
        GamerTag: gamerTag,
            DOB: dob,
            Birthplace: birthplace,
-           Number_Of_Players: numberOfPlayers
          });
          try {
            const response = await fetch("http://localhost:5000/insertPlayer", {
@@ -39,7 +37,6 @@ const GeneralFanForm = () => {
                GamerTag: gamerTag,
                DOB: dob,
                Birthplace: birthplace,
-               Number_Of_Players: numberOfPlayers
              }),
            });
        
@@ -67,7 +64,7 @@ const GeneralFanForm = () => {
       const [teamSize, setTeamSize] = useState("");
       const handleInsertGame = async () => {
         console.log("Inserting Game");
-        console.log('Data to be sent:', {Game_name: gameName, Sequel_number: sequelNumber, Genre: genre, Creator: creator, Team_size: teamSize});
+        console.log('Data to be sent:', {Game_Name: gameName, Sequel_Number: sequelNumber, Genre: genre, Creator: creator, Team_size: teamSize});
         try {
           const response = await fetch("http://localhost:5000/insertGame", {
             method: "POST",
@@ -75,8 +72,8 @@ const GeneralFanForm = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              Game_name: gameName, //assuming this is a variable
-              Sequel_number: sequelNumber,
+              Game_Name: gameName, //assuming this is a variable
+              Sequel_Number: sequelNumber,
               Genre: genre,
               Creator: creator,
               Team_size: teamSize,
@@ -104,6 +101,7 @@ const GeneralFanForm = () => {
   const [eventTournamentID, setEventTournamentID] = useState("");
   const [location, setLocation] = useState("");
   const [seats, setSeats] = useState("");
+  const [eventGameName, setEventGameName] = useState("");
   const [eventStartDate, setEventStartDate] = useState(null);
   const [eventEndDate, setEventEndDate] = useState(null);
   const [eventContractStartDate, setEventContractStartDate] = useState(null);
@@ -115,6 +113,7 @@ const GeneralFanForm = () => {
       Event_name: eventName,
       Sponsor_ID: sponsorID,
       Tournament_ID: eventTournamentID,
+      Game_name: eventGameName,
       Location: location,
       Seats: seats,
       Start_date: eventStartDate,
@@ -133,6 +132,7 @@ const GeneralFanForm = () => {
           Event_name: eventName,
           Sponsor_ID: sponsorID,
           Tournament_ID: eventTournamentID,
+          Game_name: eventGameName,
           Location: location,
           Seats: seats,
           Start_date: eventStartDate,
@@ -157,6 +157,7 @@ const GeneralFanForm = () => {
       console.error("Error inserting event:", error);
     }
   };
+
 
   // Tab 4 - Tournament
   const [tournamentID, setTournamentID] = useState("");
@@ -255,7 +256,7 @@ const GeneralFanForm = () => {
                 value={playerID}
                 onChange={(e) => setPlayerID(e.target.value)}
               />
-              <label className="col-form-label">Statistic ID:</label>
+              <label className="col-form-label">Statistic ID (For No Statistic Give Value 0):</label>
               <input
                 type="number"
                 className="form-control mb-3"
@@ -290,13 +291,6 @@ const GeneralFanForm = () => {
               className="form-control mb-3"
               value={birthplace}
               onChange={(e) => setBirthplace(e.target.value)}
-            />
-            <label className="col-form-label">Number of Players:</label>
-            <input
-              type="number"
-              className="form-control mb-3"
-              value={numberOfPlayers}
-              onChange={(e) => setNumberOfPlayers(e.target.value)}
             />
             <button
               type="button"
@@ -385,6 +379,13 @@ const GeneralFanForm = () => {
                 className="form-control mb-3"
                 value={eventTournamentID}
                 onChange={(e) => setEventTournamentID(e.target.value)}
+              />
+              <label className="col-form-label">Event Game:</label>
+              <input
+                type="text"
+                className="form-control mb-3"
+                value={eventGameName}
+                onChange={(e) => setEventGameName(e.target.value)}
               />
               <label className="col-form-label">Location:</label>
               <input
