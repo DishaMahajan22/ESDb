@@ -46,7 +46,7 @@ const Search = () => {
       // test url:
       console.log("items: " + searchItem + " " + searchName);
       const response = await fetch(
-        `http://localhost:5000/search?searchItem=${searchItem}&searchName=${searchName}`
+        `https://esdb-backend.onrender.com/search?searchItem=${searchItem}&searchName=${searchName}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -71,7 +71,7 @@ const Search = () => {
         console.log("Filtering Events for" + searchItem);
         console.log("search name " + searchName);
         const response = await fetch(
-          `http://localhost:5000/searchEvent?searchItem=${searchItem}&searchName=${searchName}&sponsorName=${sponsorFilter}&startDate=${startDate}&endDate=${endDate}`
+          `https://esdb-backend.onrender.com/searchEvent?searchItem=${searchItem}&searchName=${searchName}&sponsorName=${sponsorFilter}&startDate=${startDate}&endDate=${endDate}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -98,7 +98,7 @@ const Search = () => {
         console.log("Filtering Teams for" + searchItem);
         console.log("search name " + searchName);
         const response = await fetch(
-          `http://localhost:5000/searchTeamStats?searchItem=${searchItem}&searchName=${searchName}`
+          `https://esdb-backend.onrender.com/searchTeamStats?searchItem=${searchItem}&searchName=${searchName}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -111,7 +111,7 @@ const Search = () => {
     }
   };
 
-  //DOES NOT WORK YET (GRAB OUTCOMES OF TEAM)
+  //WORKS YET (GRAB OUTCOMES OF TEAM)
   const handleTeamEventOutcomes = async () => {
     console.log("Handling Team Event Outcomes...");
     if (searchName !== "" && searchItem === "Team") {
@@ -119,7 +119,7 @@ const Search = () => {
         console.log("Filtering Teams for" + searchItem);
         console.log("search name " + searchName);
         const response = await fetch(
-          `http://localhost:5000/searchTeamEventOutcomes?searchName=${searchName}&eventFilter=${eventFilter}`
+          `https://esdb-backend.onrender.com/searchTeamEventOutcomes?searchName=${searchName}&eventFilter=${eventFilter}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -140,7 +140,7 @@ const Search = () => {
         console.log("Filtering Teams for" + searchItem);
         console.log("search name " + searchName);
         const response = await fetch(
-          `http://localhost:5000/searchPlayerStats?&searchName=${searchName}`
+          `https://esdb-backend.onrender.com/searchPlayerStats?&searchName=${searchName}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -391,7 +391,7 @@ const Search = () => {
                       <button
                         type="button"
                         class="btn btn-dark"
-                        onClick={() => handleTeamEventOutcomes}
+                        onClick={handleTeamEventOutcomes}
                       >
                         Apply Filter
                       </button>
@@ -413,12 +413,12 @@ const Search = () => {
                 <thead>
                   <tr>
                     <th scope="col">Team Name</th>
-                    <th scope="col">Team Owner</th>
-                    <th scope="col">Most Used Weapon</th>
-                    <th scope="col">Most Played Character</th>
-                    <th scope="col">Accuracy</th>
-                    <th scope="col">K/D Ratio</th>
-                    <th scope="col">Win Rate</th>
+                    <th scope="col">Tournament Name</th>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Winning Team</th>
+                    <th scope="col">Winning Score</th>
+                    <th scope="col">Losing Team</th>
+                    <th scope="col">Losing Score</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -426,7 +426,7 @@ const Search = () => {
                     <tr key={index}>
                       <td>{result.team_name}</td>
                       <td>{result.tournament_name}</td>
-                      <td>{result.event_name}</td>
+                      <td>{result.won_event}</td>
                       <td>{result.winning_team}</td>
                       <td>{result.winning_score}</td>
                       <td>{result.losing_team}</td>
