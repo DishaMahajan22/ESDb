@@ -29,7 +29,6 @@ const handleInsertOutcome = async () => {
     Winning_Score: winningScore,
     Losing_Score: losingScore,
     Duration: duration,
-    Winner: winner
   });
   try {
     const response = await fetch("http://localhost:5000/insertOutcome", {
@@ -46,7 +45,6 @@ const handleInsertOutcome = async () => {
         Winning_Score: winningScore,
         Losing_Score: losingScore,
         Duration: duration,
-        Winner: winner
       }),
     });
 
@@ -344,13 +342,6 @@ const handleInsertOutcome = async () => {
         className="form-control mb-3"
         value={duration}
         onChange={(e) => setDuration(e.target.value)}
-      />
-      <label className="col-form-label">Winner:</label>
-      <input
-        type="text"
-        className="form-control mb-3"
-        value={winner}
-        onChange={(e) => setWinner(e.target.value)}
       />
       <button
         type="button"
