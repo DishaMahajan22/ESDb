@@ -201,7 +201,7 @@ const Search = () => {
 
     // Call your delete fetch call
     fetch(
-      `https://esdb-backend.onrender.com/delete?searchItem=${searchItem}&searchName=${rowIdToDelete}`
+      `https://esdb-backend.onrender.com/deletePlayer?searchItem=${searchItem}&searchName=${rowIdToDelete}`
     )
       .then((response) => response.json())
       .then((data) => {
