@@ -36,8 +36,6 @@ const CustomNavbar = () => {
             <Nav>
               <Nav.Link href="#/">Search</Nav.Link>
               <Nav.Link href="#/Insert">Insert</Nav.Link>
-              <Nav.Link href="#/Update">Update</Nav.Link>
-              <Nav.Link href="#/Delete">Delete</Nav.Link>
               <Button variant="btn btn-dark" onClick={openModal}>
                 Set Role
               </Button>
