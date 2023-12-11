@@ -25,7 +25,7 @@ const GeneralFanForm = () => {
            Birthplace: birthplace,
          });
          try {
-           const response = await fetch("http://localhost:5000/insertPlayer", {
+           const response = await fetch("https://esdb-backend.onrender.com/insertPlayer", {
              method: "POST",
              headers: {
                "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const GeneralFanForm = () => {
         console.log("Inserting Game");
         console.log('Data to be sent:', {Game_Name: gameName, Sequel_Number: sequelNumber, Genre: genre, Creator: creator, Team_size: teamSize});
         try {
-          const response = await fetch("http://localhost:5000/insertGame", {
+          const response = await fetch("https://esdb-backend.onrender.com/insertGame", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const GeneralFanForm = () => {
       Section_Num: sectionNum
     });
     try {
-      const response = await fetch("http://localhost:5000/insertEvent", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertEvent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +168,7 @@ const GeneralFanForm = () => {
     console.log("Inserting Tournament");
     console.log('Data to be sent:', {Tournament_ID: tournamentID,Name: tournamentName, Start_date: startDate, End_date: endDate});
     try {
-      const response = await fetch("http://localhost:5000/insertTournament", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertTournament", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

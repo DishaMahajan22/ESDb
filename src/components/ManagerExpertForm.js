@@ -32,7 +32,7 @@ const ManagerExpertForm = () => {
       Number_Of_Players: numberOfPlayers
     });
     try {
-      const response = await fetch("http://localhost:5000/insertPlayer", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertPlayer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const ManagerExpertForm = () => {
       Match_date: matchDate,
     });
     try {
-      const response = await fetch("http://localhost:5000/insertTeam", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertTeam", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +122,7 @@ const ManagerExpertForm = () => {
       End_date: endDate,
     });
     try {
-      const response = await fetch("http://localhost:5000/insertTournament", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertTournament", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ const ManagerExpertForm = () => {
       Section_Num: sectionNum
     });
     try {
-      const response = await fetch("http://localhost:5000/insertEvent", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertEvent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -235,7 +235,7 @@ const ManagerExpertForm = () => {
       Stat_Date: statDate
     });
     try {
-      const response = await fetch("http://localhost:5000/insertStatistic", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertStatistic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ const ManagerExpertForm = () => {
       Team_size: teamSize,
     });
     try {
-      const response = await fetch("http://localhost:5000/insertGame", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertGame", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -312,73 +312,6 @@ const ManagerExpertForm = () => {
     }
   };
 
-  /*//Tab 1
-  const handleTeamSubmit = (e) => {
-    e.preventDefault();
-    console.log("team ID:", teamID);
-    console.log("team Name:", teamName);
-    console.log("owner Name:", ownerName);
-  };
-  // Tab 2 - Tournament
-  const handleTournamentSubmit = (e) => {
-    e.preventDefault();
-    console.log("Tournament ID:", tournamentID);
-    console.log("Tournament Name:", tournamentName);
-    console.log("Start Date:", startDate);
-    console.log("End Date:", endDate);
-  };
-
-  // Tab 3 - Statistic
-  const handleStatisticSubmit = (e) => {
-    e.preventDefault();
-    console.log("Statistic ID:", statisticID);
-    console.log("Player ID:", playerID);
-    console.log("Most Used Weapon:", mostUsedWeapon);
-    console.log("Most Played Character:", mostPlayedCharacter);
-    console.log("Accuracy:", accuracy);
-    console.log("K/D Ratio:", kdRatio);
-    console.log("Win Rate:", winRate);
-  };
-
-  // Tab 4 - Game
-  const handleGameSubmit = (e) => {
-    e.preventDefault();
-    console.log("Game Name:", gameName);
-    console.log("Sequel Number:", sequelNumber);
-    console.log("Genre:", genre);
-    console.log("Creator:", creator);
-    console.log("Team Size:", teamSize);
-  };
-
-  // Tab 5 - Player
-  const handlePlayerSubmit = (e) => {
-    e.preventDefault();
-    console.log("Player ID:", playerID);
-    console.log("Name:", name);
-    console.log("Gamer Tag:", gamerTag);
-    console.log("DOB:", dob);
-    console.log("Birthplace:", birthplace);
-  };
-
-  // Tab 6 - Event
-  const handleEventSubmit = (e) => {
-    e.preventDefault();
-    console.log("Event Name:", eventName);
-    console.log("Sponsor ID:", sponsorId);
-    console.log("Tournament ID:", tournamentId);
-    console.log("Location:", location);
-    console.log("Seats:", seats);
-    console.log("Start Date:", eventStartDate);
-    console.log("End Date:", eventEndDate);
-  };
-
-  // Tab 7 - Player to Team
-  const handlePlayerToTeamSubmit = (e) => {
-    e.preventDefault();
-    console.log("Player ID:", playerID);
-    console.log("Team ID:", teamID);
-    console.log("Number of Players:", seats);
-  };*/
   return (
     <>
       <div>

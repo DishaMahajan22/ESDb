@@ -31,7 +31,7 @@ const handleInsertOutcome = async () => {
     Duration: duration,
   });
   try {
-    const response = await fetch("http://localhost:5000/insertOutcome", {
+    const response = await fetch("https://esdb-backend.onrender.com/insertOutcome", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const handleInsertOutcome = async () => {
     console.log("Inserting Tournament");
     console.log('Data to be sent:', {Tournament_ID: tournamentID,Name: tournamentName, Start_date: startDate, End_date: endDate});
     try {
-      const response = await fetch("http://localhost:5000/insertTournament", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertTournament", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const handleInsertOutcome = async () => {
       Stat_Date: statDate
     });
     try {
-      const response = await fetch("http://localhost:5000/insertStatistic", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertStatistic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -171,7 +171,7 @@ const handleInsertOutcome = async () => {
       Address: address
     });
     try {
-      const response = await fetch("http://localhost:5000/insertSponsor", {
+      const response = await fetch("https://esdb-backend.onrender.com/insertSponsor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -203,39 +203,6 @@ const handleInsertOutcome = async () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
-  /*const handleOutcomeSubmit = (e) => {
-    e.preventDefault(); 
-    // Handle form submission for Outcome tab
-    console.log("Outcome ID:", outcomeID);
-    console.log("Sponsor ID:", sponsorID);
-    console.log("Event Name:", eventName);
-    console.log("Winning Team Name:", winningTeamName);
-    console.log("Losing Team Name:", losingTeamName);
-    console.log("Winning Team Score:", winningTeamScore);
-    console.log("Losing Team Score:", losingTeamScore);
-  };
-
-  const handleTournamentSubmit = (e) => {
-    e.preventDefault(); 
-    // Handle form submission for Tournament tab
-    console.log("Tournament ID:", tournamentID);
-    console.log("Tournament Name:", tournamentName);
-    console.log("Start Date:", startDate);
-    console.log("End Date:", endDate);
-  };
-
-  const handleStatisticSubmit = (e) => {
-    e.preventDefault(); 
-    // Handle form submission for Statistic tab
-    console.log("Statistic ID:", statisticID);
-    console.log("Player ID:", playerID);
-    console.log("Most Used Weapon:", mostUsedWeapon);
-    console.log("Most Played Character:", mostPlayedCharacter);
-    console.log("Accuracy:", accuracy);
-    console.log("K/D Ratio:", kdRatio);
-    console.log("Win Rate:", winRate);
-  };*/
 
   return (
     <div>
