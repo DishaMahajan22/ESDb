@@ -173,7 +173,7 @@ const Search = () => {
       // Update the gamer tag in the editPlayer object
       const updatedPlayer = { ...editPlayer, gamertag: editedGamerTag };
       console.log("edit player: ", updatedPlayer);
-      const response = await fetch("http://localhost:5000/updatePlayer", {
+      const response = await fetch("https://esdb-backend.onrender.com/updatePlayer", {
         method: "PUT", // Use PUT for updating
         headers: {
           "Content-Type": "application/json",
@@ -197,7 +197,7 @@ const Search = () => {
       // Update the gamer tag in the editPlayer object
       const updatedOwner = { ...editOwner, owner_name: editedOwner };
       console.log("edit player: ", updatedOwner);
-      const response = await fetch("http://localhost:5000/updateOwner", {
+      const response = await fetch("https://esdb-backend.onrender.com/updateOwner", {
         method: "PUT", // Use PUT for updating
         headers: {
           "Content-Type": "application/json",
@@ -596,7 +596,7 @@ const Search = () => {
                   </th>
                 ))}
                 <th scope="col">Delete</th>
-                {searchItem === "Player" && <th scope="col">Edit</th>}
+                {(searchItem === "Player" || searchItem === "Team") && <th scope="col">Edit</th>}
               </tr>
             </thead>
             <tbody>
@@ -622,7 +622,7 @@ const Search = () => {
                     </button>
                   </td>
                   <td>
-                    {searchItem === "Player" ? (
+                    {searchItem === "Player" && (
                       <button onClick={() => handleEditClick(result)}>
                         {/* Your edit button */}
                         <svg
@@ -636,7 +636,8 @@ const Search = () => {
                           <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
                         </svg>
                       </button>
-                    ) : (
+                    )}
+                    {searchItem === "Team" && (
                       <button onClick={() => handleOwnerClick(result)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
