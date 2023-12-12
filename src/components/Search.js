@@ -215,7 +215,8 @@ const Search = () => {
       setShowModal(false);
     } catch (error) {}
   };
-  const handleDeleteRow = (row) => {
+  const handleDeleteRow = async (row) => {
+
     let rowIdToDelete;
     const rowKeyMap = {
       Tournament: "tournament_id",
@@ -225,7 +226,7 @@ const Search = () => {
       Game: "game_name",
       Sponsor: "sponsor_id",
     };
-
+    //created switch here for future delete implementations
     switch (searchItem) {
       case "Tournament":
         rowIdToDelete = row.tournament_id;
@@ -263,6 +264,22 @@ const Search = () => {
     console.log("Row ID to delete:", rowIdToDelete);
 
     // Call your delete fetch call
+    const response = await fetch(
+      `https://esdb-backend.onrender.com/deletePlayer`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({Player_ID: rowIdToDelete})
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   useEffect(() => {
