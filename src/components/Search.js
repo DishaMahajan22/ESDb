@@ -20,6 +20,11 @@ const Search = () => {
   const [eventFilter, setEventFilter] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [editOwner, setEditOwner] = useState(false);
+  const [editPlayer, setEditPlayer] = useState(false);
+  const [editedGamerTag, setEditedGamerTag] = useState("");
+  const [editedOwner, setEditedOwner] = useState("");
 
   let currentResults = useRef([]);
   const pageNumbers = useMemo(() => {
@@ -152,6 +157,64 @@ const Search = () => {
       }
     }
   };
+  const handleEditClick = (player) => {
+    setEditPlayer(player);
+    setEditedGamerTag(player.gamertag); // Assuming 'gamer_tag' is the property you want to edit
+    setShowModal(true);
+  };
+  const handleOwnerClick = (team) => {
+    setEditOwner(team);
+    setEditedOwner(team.owner_name); // Assuming 'gamer_tag' is the property you want to edit
+    setShowModal(true);
+  };
+  const handleSaveEdit = async () => {
+    console.log("Updated gamer tag:", editedGamerTag);
+    try {
+      // Update the gamer tag in the editPlayer object
+      const updatedPlayer = { ...editPlayer, gamertag: editedGamerTag };
+      console.log("edit player: ", updatedPlayer);
+      const response = await fetch("https://esdb-backend.onrender.com/updatePlayer", {
+        method: "PUT", // Use PUT for updating
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPlayer),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      console.log("Updated player object:", updatedPlayer);
+
+      // Reset editPlayer & close the modal
+      setEditPlayer(null);
+      setShowModal(false);
+    } catch (error) {}
+  };
+  const handleSaveOwner = async () => {
+    console.log("Updated owner tag:", editedOwner);
+    try {
+      // Update the gamer tag in the editPlayer object
+      const updatedOwner = { ...editOwner, owner_name: editedOwner };
+      console.log("edit player: ", updatedOwner);
+      const response = await fetch("https://esdb-backend.onrender.com/updateOwner", {
+        method: "PUT", // Use PUT for updating
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedOwner),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      console.log("Updated player object:", updatedOwner);
+
+      // Reset editPlayer & close the modal
+      setEditPlayer(null);
+      setShowModal(false);
+    } catch (error) {}
+  };
   const handleDeleteRow = (row) => {
     let rowIdToDelete;
     const rowKeyMap = {
@@ -164,35 +227,35 @@ const Search = () => {
     };
 
     switch (searchItem) {
-    case "Tournament":
-      rowIdToDelete = row.tournament_id;
-      break;
-    case "Event":
-      rowIdToDelete = row.event_name;
-      break;
-    case "Player":
-      rowIdToDelete = row.player_id;
-      break;
-    case "Team":
-      rowIdToDelete = row.team_id;
-      break;
-    case "Game":
-      rowIdToDelete = row.game_name;
-      break;
-    case "Sponsor":
-      rowIdToDelete = row.sponsor_id;
-      break;
-    default:
-      break;
-  }
+      case "Tournament":
+        rowIdToDelete = row.tournament_id;
+        break;
+      case "Event":
+        rowIdToDelete = row.event_name;
+        break;
+      case "Player":
+        rowIdToDelete = row.player_id;
+        break;
+      case "Team":
+        rowIdToDelete = row.team_id;
+        break;
+      case "Game":
+        rowIdToDelete = row.game_name;
+        break;
+      case "Sponsor":
+        rowIdToDelete = row.sponsor_id;
+        break;
+      default:
+        break;
+    }
 
-  console.log("Row to delete info:", row);
-  console.log("Row ID to delete:", rowIdToDelete);
+    console.log("Row to delete info:", row);
+    console.log("Row ID to delete:", rowIdToDelete);
 
-  // Update the state to reflect the deletion
-  const filteredResults = searchResults.filter(
-    (elem) => elem[rowKeyMap[searchItem]] !== rowIdToDelete
-  );
+    // Update the state to reflect the deletion
+    const filteredResults = searchResults.filter(
+      (elem) => elem[rowKeyMap[searchItem]] !== rowIdToDelete
+    );
 
     setSearchResults([...filteredResults]);
 
@@ -533,7 +596,7 @@ const Search = () => {
                   </th>
                 ))}
                 <th scope="col">Delete</th>
-                <th scope="col">Edit</th>
+                {(searchItem === "Player" || searchItem === "Team") && <th scope="col">Edit</th>}
               </tr>
             </thead>
             <tbody>
@@ -559,18 +622,35 @@ const Search = () => {
                     </button>
                   </td>
                   <td>
-                    <button>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-pen-fill"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
-                      </svg>
-                    </button>
+                    {searchItem === "Player" && (
+                      <button onClick={() => handleEditClick(result)}>
+                        {/* Your edit button */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-pen-fill"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                        </svg>
+                      </button>
+                    )}
+                    {searchItem === "Team" && (
+                      <button onClick={() => handleOwnerClick(result)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-pen-fill"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001" />
+                        </svg>
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -578,6 +658,103 @@ const Search = () => {
           </table>
         ) : (
           <p>No results found.</p>
+        )}
+        {searchItem === "Player" ? (<div
+          className="modal"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: showModal ? "block" : "none" }}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Edit Gamer Tag</h5>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={() => setShowModal(false)}
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <label htmlFor="editedGamerTag">New Gamer Tag:</label>
+                <input
+                  type="text"
+                  id="editedGamerTag"
+                  className="form-control"
+                  value={editedGamerTag}
+                  onChange={(e) => setEditedGamerTag(e.target.value)}
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSaveEdit}
+                >
+                  Save changes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>) : (
+          <div
+          className="modal"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: showModal ? "block" : "none" }}
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Edit Team Owner Name</h5>
+                <button
+                  type="button"
+                  className="close"
+                  onClick={() => setShowModal(false)}
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <label htmlFor="editedGamerTag">New Owner Name:</label>
+                <input
+                  type="text"
+                  id="editedGamerTag"
+                  className="form-control"
+                  value={editedOwner}
+                  onChange={(e) => setEditedOwner(e.target.value)}
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSaveOwner}
+                >
+                  Save changes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         )}
       </div>
       <nav aria-label="Page navigation">
