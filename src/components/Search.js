@@ -200,16 +200,28 @@ const Search = () => {
     console.log("Row ID to delete:", rowIdToDelete);
 
     // Call your delete fetch call
-    fetch(
-      `https://esdb-backend.onrender.com/deletePlayer?searchItem=${searchItem}&searchName=${rowIdToDelete}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    fetch(`http://localhost:5000/deletePlayerFromTeam`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Player_ID: rowIdToDelete,
+        Team_ID: searchItem,
+      }),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
   };
 
   useEffect(() => {
